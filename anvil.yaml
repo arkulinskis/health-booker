@@ -1057,13 +1057,24 @@ db_schema:
     server: full
     title: Waivers
 metadata:
-  description: Find and book yoga classes across Montreal studios with one account. Studios get scheduling, passes, teacher
-    subs and pay, with no commission.
+  description: Find and book yoga classes across Montréal studios with one account. Studios get scheduling, passes, teacher
+    subs and pay, with no commission and no contract.
   logo_img: asset:icon-512.png
-  title: Health Booker
+  title: 'Health Booker: book yoga classes across Montréal studios'
 name: Health Booker
 native_deps:
-  head_html: "<script src=\"_/theme/legal-kit.js?v=b350c2e1a5\"></script>\n<meta name=\"viewport\" content=\"width=device-width,\
+  head_html: "<script src=\"_/theme/legal-kit.js?v=b350c2e1a5\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/healthbooker.json\
+    \ and run seo.py, not here) -->\n<meta name=\"robots\" content=\"index, follow, max-image-preview:large, max-snippet:-1,\
+    \ max-video-preview:-1\">\n<meta name=\"keywords\" content=\"yoga classes Montreal, book yoga class, yoga studio software,\
+    \ Mindbody alternative, yoga studio scheduling, class booking app, yoga en français Montréal, studio management no commission,\
+    \ hot yoga Montreal\">\n<meta name=\"author\" content=\"Arkvital\">\n<meta property=\"og:type\" content=\"website\">\n\
+    <meta property=\"og:site_name\" content=\"Health Booker\">\n<meta property=\"og:title\" content=\"Health Booker: book\
+    \ yoga classes across Montréal studios\">\n<meta property=\"og:description\" content=\"Find and book yoga classes across\
+    \ Montréal studios with one account. Studios get scheduling, passes, teacher subs and pay, with no commission and no contract.\"\
+    >\n<meta property=\"og:locale\" content=\"en_CA\">\n<meta name=\"twitter:card\" content=\"summary\">\n<meta name=\"twitter:title\"\
+    \ content=\"Health Booker: book yoga classes across Montréal studios\">\n<meta name=\"twitter:description\" content=\"\
+    Find and book yoga classes across Montréal studios with one account. Studios get scheduling, passes, teacher subs and\
+    \ pay, with no commission and no contract.\">\n<!-- seo:end -->\n<meta name=\"viewport\" content=\"width=device-width,\
     \ initial-scale=1, viewport-fit=cover\">\n<meta name=\"theme-color\" content=\"#F6F1E9\">\n<meta name=\"apple-mobile-web-app-capable\"\
     \ content=\"yes\">\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link rel=\"preconnect\" href=\"\
     https://fonts.gstatic.com\" crossorigin>\n<link href=\"https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap\"\
