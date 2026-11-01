@@ -19,12 +19,14 @@ html .anvil-spinner::after, #loadingSpinner::after {
   content: ""; position: absolute; inset: 12px; border-radius: 50%;
   background: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22%3E %3Crect width=%22512%22 height=%22512%22 rx=%22120%22 fill=%22%235e8263%22/%3E %3Ccircle cx=%22162%22 cy=%22164%22 r=%2258%22 fill=%22%23c8714e%22/%3E %3Cpath d=%22M128 400C128 250 236 132 400 124C404 290 300 400 128 400Z%22 fill=%22%23fbf6ec%22/%3E %3Cpath d=%22M150 380C214 300 270 240 352 172%22 fill=%22none%22 stroke=%22%235e8263%22 stroke-width=%2220%22 stroke-linecap=%22round%22/%3E %3C/svg%3E") center / contain no-repeat;
 }
+/* loader:start ripple brand=#5e8263 (made by APP_MAKER/tools/loaders.py; rerun it instead of editing) */
+html .anvil-spinner, #loadingSpinner { animation: app-breathe 2.4s ease-in-out infinite; }
 html .anvil-spinner::before, #loadingSpinner::before {
-  content: ""; position: absolute; inset: -9px; border-radius: 50%; border: 3px solid transparent;
-  border-top-color: #5e8263; border-right-color: #c8714e; animation: app-turn 1.6s linear infinite;
+  content: ""; position: absolute; inset: 0; border-radius: 44px; animation: app-ripple 2.4s ease-out infinite;
 }
-@keyframes app-turn { to { transform: rotate(360deg); } }
-@keyframes app-breathe { 0%, 100% { transform: scale(.9); } 45% { transform: scale(1.04); } }
+@keyframes app-breathe { 50% { transform: scale(.95); } }
+@keyframes app-ripple { 0% { box-shadow: 0 0 0 0 rgba(94, 130, 99, 0.45), 0 0 0 0 rgba(94, 130, 99, 0.3); } 100% { box-shadow: 0 0 0 26px rgba(94, 130, 99, 0), 0 0 0 46px rgba(94, 130, 99, 0); } }
+/* loader:end */
 @media (prefers-reduced-motion: reduce) {
   html .anvil-spinner, #loadingSpinner { animation: none; }
   html .anvil-spinner::before, #loadingSpinner::before { animation-duration: 3s; }
