@@ -58,8 +58,8 @@ SEO = {
    "Yes. Filter for classes taught en français."
   ]
  ],
- "site": "",
- "updated": "2026-10-31",
+ "site": "https://health-booker.anvil.app",
+ "updated": "2026-11-01",
  "icon": "icon-512.png",
  "colors": {
   "bg": "#F6F1E9",
