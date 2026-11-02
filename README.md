@@ -7,7 +7,7 @@ schedule, passes, class lists, subs, teacher pay, clients and insights, with **n
 free data export**. Built on [Anvil](https://anvil.works).
 
 - **App repo:** github.com/arkulinskis/health-booker (branch `master`). Anvil pulls `master`.
-- **Live:** not published yet (will be `https://healthbooker.anvil.app` or a custom domain).
+- **Live:** https://health-booker.anvil.app
 
 ## What it does
 
