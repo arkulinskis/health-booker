@@ -1063,7 +1063,7 @@ metadata:
   title: 'Health Booker: book yoga classes across Montréal studios'
 name: Health Booker
 native_deps:
-  head_html: "<script src=\"_/theme/legal-kit.js?v=48f79497af\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/healthbooker.json\
+  head_html: "<script src=\"_/theme/legal-kit.js?v=ec788a6c20\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/healthbooker.json\
     \ and run seo.py, not here) -->\n<meta name=\"robots\" content=\"index, follow, max-image-preview:large, max-snippet:-1,\
     \ max-video-preview:-1\">\n<meta name=\"keywords\" content=\"yoga classes Montreal, book yoga class, yoga studio software,\
     \ Mindbody alternative, yoga studio scheduling, class booking app, yoga en français Montréal, studio management no commission,\
