@@ -1314,6 +1314,10 @@
 /* ===== auth.html ===== */
 (function () {
   var esc = UI.esc;
+  var GOOGLE_G = '<svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>' +
+    '<path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>' +
+    '<path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>' +
+    '<path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>';
   function pw(name, auto) {
     return '<div class="au-pw"><input type="password" name="' + name + '" autocomplete="' + auto + '" required minlength="8">' +
       '<button type="button" data-show>Show</button></div>';
@@ -1336,6 +1340,7 @@
           (window.LegalKit ? '<div>' + LegalKit.consentField() + '</div>' : '') : '') +
         '<div data-msg role="alert"' + (msg ? ' class="' + (isErr ? 'ui-error' : 'ui-note') + '">' + esc(msg) : ' hidden>') + '</div>' +
         '<button class="ui-btn primary block" type="submit">' + { login: 'Sign in', signup: 'Create account', reset: 'Send the link' }[mode] + '</button></form>' +
+        (mode !== 'reset' ? '<div class="au-or">or</div><button type="button" class="ui-btn block au-google" data-google>' + GOOGLE_G + 'Continue with Google</button>' : '') +
         '<div class="au-links">' + (mode === 'login' ? '<a data-mode="reset">Forgot your password?</a>' : '<a data-mode="login">' + UI.icon('back') + ' Back to sign in</a>') +
         '<a href="#landing" data-go="landing">About ' + esc(UI.config.name) + '</a></div></div></div>';
       var first = view.querySelector('input');
@@ -1344,6 +1349,8 @@
     view.addEventListener('click', function (e) {
       var m = e.target.closest('[data-mode]');
       if (m) { e.preventDefault(); mode = m.getAttribute('data-mode'); history.replaceState(null, '', '#auth' + (mode === 'login' ? '' : '/' + mode)); draw(); return; }
+      var g = e.target.closest('[data-google]');
+      if (g) { google(g); return; }
       var s = e.target.closest('[data-show]');
       if (s) { var i = s.parentNode.querySelector('input'); i.type = i.type === 'password' ? 'text' : 'password'; s.textContent = i.type === 'password' ? 'Show' : 'Hide'; }
     });
@@ -1360,6 +1367,14 @@
         else UI.toast(mode === 'signup' ? 'Welcome to ' + UI.config.name + '!' : 'Welcome back!', 'ok');
       }, function (err) { say(err.message, true); });
     });
+    // Sign-up asks for the Privacy & Terms tick here too (ticking it is remembered for the new account).
+    function google(btn) {
+      var form = view.querySelector('form'), v = mode === 'signup' ? UI.formData(form) : {};
+      if (mode === 'signup' && window.LegalKit && !LegalKit.consentChecked(form)) return;
+      UI.busy(btn, UI.auth('google', { name: (v.name || '').trim() })).then(function () {
+        UI.toast(mode === 'signup' ? 'Welcome to ' + UI.config.name + '!' : 'Welcome back!', 'ok');
+      }, function (err) { say(err.message, true); });
+    }
     function say(msg, isErr) {
       var box = view.querySelector('[data-msg]');
       box.className = isErr ? 'ui-error' : 'ui-note'; box.textContent = msg; box.hidden = false;
@@ -1770,6 +1785,21 @@
 })();
 
 /* ===== landing.html ===== */
+// Watch section: swap the video's cover for YouTube's player (privacy-enhanced) only when it's pressed.
+  if (!window.__ytFilm) {
+    window.__ytFilm = true;
+    document.addEventListener('click', function (e) {
+      var b = e.target && e.target.closest ? e.target.closest('[data-yt-film]') : null;
+      if (!b) return;
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + b.getAttribute('data-yt-film') + '?autoplay=1&rel=0&playsinline=1';
+      f.title = b.getAttribute('data-yt-title') || 'Video';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      f.allowFullscreen = true;
+      f.referrerPolicy = 'strict-origin-when-cross-origin';
+      b.parentNode.replaceChild(f, b);
+    });
+  }
 (function () {
   var COPY = {
     eyebrow: 'Yoga across Montréal, in one place',
@@ -1829,6 +1859,7 @@
         '<div class="lp-proof">' + C.proof.map(function (p) { return '<span>' + UI.icon('check') + esc(p) + '</span>'; }).join('') + '</div>' +
       '</div>' + heroArt() + '</div></section>' +
 
+      '<section class="lp-section ytf" id="watch"><div class="ui-wrap"><div class="ytf-in"><div class="ytf-copy"><div class="eyebrow"><svg viewBox="0 0 28 20" width="20" height="14" aria-hidden="true"><rect width="28" height="20" rx="5" fill="#FF0033"/><path d="M11.2 5.8v8.4l7.3-4.2z" fill="#fff"/></svg>Watch</div><h2>See Health Booker in about a minute</h2><p>A short video tour of what Health Booker does and how it works.</p><a class="ytf-link" href="https://www.youtube.com/watch?v=4BjAXdLkvMY" target="_blank" rel="noopener">Watch on YouTube &#8599;</a></div><div><div class="ytf-frame"><button type="button" class="ytf-cover" data-yt-film="4BjAXdLkvMY" data-yt-title="Health Booker video" aria-label="Play the Health Booker video (1:15)"><img src="_/theme/yt-cover.jpg" alt="" loading="lazy" decoding="async" width="960" height="540"><span class="ytf-play" aria-hidden="true"><svg viewBox="0 0 68 48" width="68" height="48"><path d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.3.3 34 .3 34 .3s-21.3 0-26.5 1.4a8.5 8.5 0 0 0-6 6C.1 13 .1 24 .1 24s0 11 1.4 16.3a8.5 8.5 0 0 0 6 6c5.2 1.4 26.5 1.4 26.5 1.4s21.3 0 26.5-1.4a8.5 8.5 0 0 0 6-6C67.9 35 67.9 24 67.9 24s0-11-1.4-16.3z" fill="#FF0033"/><path d="M45 24 27 14v20z" fill="#fff"/></svg></span><span class="ytf-len">1:15</span></button></div><p class="ytf-note">The video loads from YouTube when you press play.</p></div></div></div></section>' +
       '<section class="lp-section" id="students"><div class="ui-wrap"><div class="lp-head"><div class="eyebrow">For students</div><h2>Booking yoga should feel like yoga</h2>' +
         '<p>Not like fighting an app. Everything you need to find the right class and actually go.</p></div>' +
         '<div class="lp-feats">' + C.students.map(function (f) { return '<div class="ui-card lp-feat"><div class="ic">' + UI.icon(f[0]) + '</div><h3>' + esc(f[1]) + '</h3><p>' + esc(f[2]) + '</p></div>'; }).join('') + '</div></div></section>' +
