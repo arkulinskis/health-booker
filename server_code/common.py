@@ -133,6 +133,17 @@ def aware(d):
     return d
 
 
+_EPOCH = dt.datetime(1970, 1, 1, tzinfo=dt.timezone.utc)
+
+
+def waiver(studio, user):
+    """The person's waiver at a studio (the newest if there are several), or None."""
+    if studio is None or user is None:
+        return None
+    rows = list(app_tables.waivers.search(studio=studio, user=user))
+    return max(rows, key=lambda r: aware(r["signed"]) or _EPOCH) if rows else None
+
+
 def slugify(name):
     s = re.sub(r"[^a-z0-9]+", "-", (name or "").lower()).strip("-")
     return s[:40] or "studio"

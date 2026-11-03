@@ -95,7 +95,7 @@ def get_studio(slug):
             "classes": [Mo.class_dict(c, staff, studios, rooms) for c in rows], "teachers": teachers,
             "reviews": [_review(r) for r in reviews[:12]], "products": products,
             "mine": _my_states(me, rows), "follows": _follows(me), "passes": passes,
-            "waiver": bool(me and app_tables.waivers.get(studio=s, user=me)),
+            "waiver": bool(me and C.waiver(s, me)),
             "can_manage": Mo.can_manage(s, me), "visited": visited}
 
 
@@ -138,7 +138,7 @@ def get_class(class_id):
             "room": {"id": room.get_id(), "name": room["name"], "rows": room["rows"], "cols": room["cols"],
                      "blocked": room["blocked"] or []} if room else None,
             "taken": taken, "booking": Mo.booking_dict(mine, d) if mine else None, "passes": passes,
-            "products": products, "waiver": bool(me and app_tables.waivers.get(studio=s, user=me)),
+            "products": products, "waiver": bool(me and C.waiver(s, me)),
             "waiver_text": s["waiver_text"] or DEFAULT_WAIVER, "visited": visited, "follows": following,
             "is_staff": Mo.is_staff(s, me), "past": C.aware(c["start"]) + dt.timedelta(minutes=c["minutes"] or 60) < C.now()}
 

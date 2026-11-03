@@ -254,7 +254,7 @@ def roster(class_id):
         if b["status"] == "cancelled":
             continue
         u = b["user"]
-        w = app_tables.waivers.get(studio=s, user=u) if u else None
+        w = C.waiver(s, u)
         p = b["pass_used"]
         n_visits = len(Mo.visits(u, s)) if u else 0
         people.append({"id": b.get_id(), "name": C.name_of(u) if u else (b["walkin_name"] or "Walk-in"),
@@ -478,7 +478,7 @@ def client_detail(slug, user_id):
     bookings = sorted(app_tables.bookings.search(studio=s, user=u), key=lambda b: C.aware(b["start"]), reverse=True)
     if not bookings and not app_tables.passes.search(studio=s, user=u):
         return C.fail("That person isn't a client of this studio.")
-    w = app_tables.waivers.get(studio=s, user=u)
+    w = C.waiver(s, u)
     return {"name": C.name_of(u), "email": u["email"],
             "passes": [_pass_row(p) for p in sorted(app_tables.passes.search(studio=s, user=u), key=lambda p: C.aware(p["created"]), reverse=True)],
             "bookings": [{"id": b.get_id(), "title": b["klass"]["title"] if b["klass"] else "", "start": C.iso(b["start"]),

@@ -320,7 +320,7 @@ def _passes(ctx, rng, now):
                 nxt = (prods.get("unlimited") or prods.get("pack") or [None])[0]
                 if nxt is not None:  # liked it: bought a pack or membership after the intro
                     plan.append((u, slug, nxt, nxt["kind"], now - dt.timedelta(days=rng.randint(0, 2))))
-    pass_rows, waiver_rows = [], []
+    pass_rows, waiver_rows, signed_up = [], [], set()
     for (u, slug, prod, kind, started) in plan:
         s = ctx["studios"][slug]["row"]
         days = prod["days"] or 30
@@ -329,6 +329,9 @@ def _passes(ctx, rng, now):
                               paused_until=None, paid=rng.random() > 0.12 or (prod["price"] or 0) == 0,
                               pay_method=rng.choice(["card", "card", "e-transfer", "cash"]), price=prod["price"] or 0,
                               source="buy", created=started, is_demo=True))
+        if (u.get_id(), slug) in signed_up:  # a second pass at the same studio: they signed the waiver already
+            continue
+        signed_up.add((u.get_id(), slug))
         share = rng.random() < 0.15
         waiver_rows.append(dict(studio=s, user=u, signed=started, signature=u["display_name"], emergency="",
                                 health=rng.choice(HEALTH) if share else "", share=share, is_demo=True))
@@ -336,11 +339,22 @@ def _passes(ctx, rng, now):
     _bulk(app_tables.waivers, waiver_rows)
     ctx["members"] = {k: [] for k in live}
     for (u, slug, prod, kind, started), p in zip(plan, passes):
+        again = any(m["user"].get_id() == u.get_id() for m in ctx["members"][slug])  # bought a second pass after the intro week
         freq = {"unlimited": rng.uniform(2, 4.5), "pack": rng.uniform(0.8, 2), "intro": rng.uniform(2, 4)}.get(kind, 1)
         # A few members drift away: they came in the first week of the history and not since.
         stop = now - dt.timedelta(days=rng.randint(15, 19)) if kind in ("unlimited", "pack") and rng.random() < 0.12 else None
-        ctx["members"][slug].append({"user": u, "pass": p, "kind": kind, "since": started if kind == "intro" else started - dt.timedelta(days=60),
+        ctx["members"][slug].append({"user": u, "pass": p, "kind": kind, "since": started if kind == "intro" or again else started - dt.timedelta(days=60),
                                      "seen": False, "freq": freq, "credits": prod["credits"], "stop": stop})
+
+
+def _one_each(people):
+    """One entry per person (someone with an intro pass and a later pack is still one person): the newest pass wins."""
+    best = {}
+    for m in people:
+        k = m["user"].get_id()
+        if k not in best or m["since"] > best[k]["since"]:
+            best[k] = m
+    return [m for m in people if best[m["user"].get_id()] is m]
 
 
 def _pick(rng, people, n):
@@ -392,7 +406,7 @@ def _make_classes(st, first_day, last_day, rng, members):
         want = int(round(cap * base * rng.uniform(0.6, 1.0) * fade))
         if d["title"] == "Saturday Slow Flow" and 0 < days_out < 7:
             want = cap + 3
-        people = [m for m in members if m["since"] < start + dt.timedelta(hours=12) and (m.get("stop") is None or start < m["stop"])]
+        people = _one_each([m for m in members if m["since"] < start + dt.timedelta(hours=12) and (m.get("stop") is None or start < m["stop"])])
         spots = list(spots_by_room.get(d["room"].get_id(), []))
         rng.shuffle(spots)
         n_in = waiting = 0
@@ -485,7 +499,7 @@ def _extras(ctx, rng, now):
     C.notify(owner, sage["row"], "sub", "Theo needs a sub for Sunday Vinyasa", "Climbing trip up north. Samir or Inès could cover.", "#teach")
     C.notify(owner, sage["row"], "pause", "Hannah paused her membership", "For 2 weeks. Her end date moved by the same time.", "")
     C.notify(owner, sage["row"], "studio", "Three first-timers this week", "Say hi at the desk: they have a leaf next to their name in the roster.", "#manage")
-    members = ctx["members"].get("sage-and-stone", [])
+    members = _one_each(ctx["members"].get("sage-and-stone", []))
     for m in members[:8]:
         app_tables.follows.add_row(user=m["user"], studio=sage["row"], created=now, is_demo=True)
     for i, m in enumerate([m for m in members if m["kind"] in ("pack", "unlimited")][:3]):

@@ -73,7 +73,7 @@ def book_class(class_id, pass_id=None, spot=None):
     if C.aware(c["start"]) + dt.timedelta(minutes=10) < C.now():
         return C.fail("This class has already started.")
     s = c["studio"]
-    if not app_tables.waivers.get(studio=s, user=me):
+    if not C.waiver(s, me):
         from .Studios import DEFAULT_WAIVER
         return dict(C.fail("Please sign %s's waiver first (once, takes 20 seconds)." % s["name"]), need="waiver",
                     waiver_text=s["waiver_text"] or DEFAULT_WAIVER)
@@ -168,7 +168,7 @@ def sign_waiver(slug, signature, emergency="", health="", share=False):
     signature = C.text(signature, 80)
     if len(signature) < 3:
         return C.fail("Type your full name to sign.")
-    row = app_tables.waivers.get(studio=s, user=me)
+    row = C.waiver(s, me)
     vals = dict(signed=C.now(), signature=signature, emergency=C.text(emergency, 120),
                 health=C.text(health, 600, multiline=True), share=bool(share))
     if row:
