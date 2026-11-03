@@ -516,10 +516,45 @@ def _rating(s):
     s.update(rating=round(sum(r["stars"] for r in rows) / len(rows), 2) if rows else 0, rating_n=len(rows))
 
 
+def dedupe_once():
+    """One-time cleanup (Nov 2026): demo data loaded before the fix gave some people two waivers at one studio and two
+    bookings in one class (the Class list crash, 'Élise D.' twice on the kiosk). Demo rows only; real data is untouched."""
+    if C.get_setting("demo_dedupe_v1"):
+        return 0
+    C.set_setting("demo_dedupe_v1", C.now().isoformat())  # first, so a failure can never make it run on every visit
+    removed = 0
+    seen = set()
+    for w in app_tables.waivers.search(is_demo=True):
+        if w["studio"] is None or w["user"] is None:
+            continue
+        k = (w["studio"].get_id(), w["user"].get_id())
+        if k in seen:
+            w.delete()
+            removed += 1
+        else:
+            seen.add(k)
+    groups = {}
+    for b in app_tables.bookings.search(is_demo=True):
+        if b["user"] is not None and b["klass"] is not None:
+            groups.setdefault((b["klass"].get_id(), b["user"].get_id()), []).append(b)
+    for rows in groups.values():
+        if len(rows) < 2:
+            continue
+        keep = next((b for b in rows if len(app_tables.reviews.search(booking=b))), rows[0])  # keep the one a review points at
+        klass = keep["klass"]
+        for b in rows:
+            if b is not keep and not len(app_tables.reviews.search(booking=b)):
+                b.delete()
+                removed += 1
+        Mo.recount(klass)
+    return removed
+
+
 def top_up():
     """Keep the demo schedule ~12 days ahead (called from Discover; one settings read when there's nothing to do)."""
     if state() != "loaded":
         return 0
+    dedupe_once()
     today = _today()
     through = C.get_setting("demo_through")
     try:
