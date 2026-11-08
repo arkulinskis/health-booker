@@ -1,0 +1,12 @@
+<div class="mg-review-host">
+  <div class="ui-card mg-review" anvil:name="card">
+    <div class="ui-row between"><span anvil:dom-node="stars"></span><span class="small muted" anvil:dom-node="who"></span></div>
+    <p class="mg-review-text" anvil:dom-node="text"></p>
+    <anvil-component type="TextArea" name="reply_box" prop:placeholder="Write a public reply" prop:height="60"></anvil-component>
+    <div class="ui-row mg-review-acts">
+      <anvil-component type="Button" name="save_button" prop:text="Save reply" prop:role='["btn", "btn-sm", "btn-primary"]'></anvil-component>
+      <span class="ui-spacer"></span>
+      <anvil-component type="Button" name="hide_button" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="mg-tab">
+  <div class="ui-row mg-range">
+    <div class="ui-seg" role="group" aria-label="Period">
+      <button type="button" anvil:name="r7" anvil:on-dom:click="self.range_click" data-days="7">7 days</button>
+      <button type="button" anvil:name="r28" anvil:on-dom:click="self.range_click" data-days="28">4 weeks</button>
+      <button type="button" anvil:name="r90" anvil:on-dom:click="self.range_click" data-days="90">3 months</button>
+    </div>
+  </div>
+  <div class="hb-kpis">
+    <div class="hb-kpi"><b anvil:dom-node="k_visits"></b><span>visits</span><small anvil:dom-node="k_classes"></small></div>
+    <div class="hb-kpi"><b anvil:dom-node="k_fill"></b><span>average fill</span></div>
+    <div class="hb-kpi"><b anvil:dom-node="k_rev"></b><span>passes sold</span><small>Paid to you directly, no commission</small></div>
+    <div class="hb-kpi"><b anvil:dom-node="k_noshow"></b><span>no-shows</span><small anvil:dom-node="k_late"></small></div>
+    <div class="hb-kpi"><b anvil:dom-node="k_new"></b><span>new students</span><small anvil:dom-node="k_clients"></small></div>
+    <div class="hb-kpi"><b anvil:dom-node="k_mood"></b><span>how students leave</span><small anvil:dom-node="k_mood_n"></small></div>
+  </div>
+  <div class="mg-ins">
+    <div class="ui-card"><h3>Passes sold per day</h3><p class="sub" anvil:dom-node="rev_note"></p><anvil-component type="Health_Booker.Components.Chart" name="cols_chart"></anvil-component></div>
+    <div class="ui-card"><h3>By kind of pass</h3><p class="sub">Where the money comes from.</p><anvil-component type="Health_Booker.Components.Chart" name="kind_chart"></anvil-component>
+      <p class="muted" anvil:name="no_sales">No sales in this period.</p></div>
+    <div class="ui-card"><h3>When classes fill up</h3><p class="sub">Average fill by day and hour. Darker = fuller.</p><anvil-component type="Health_Booker.Components.Chart" name="fill_chart"></anvil-component></div>
+    <div class="ui-card"><h3>Intro offers that stick</h3><p class="sub" anvil:dom-node="funnel_note"></p><anvil-component type="Health_Booker.Components.Chart" name="funnel_chart"></anvil-component>
+      <p class="small muted mg-friend"><i class="ic ic-gift"></i> <span anvil:dom-node="friend"></span></p></div>
+    <div class="ui-card"><h3>Classes people love</h3><p class="sub">Ranked by average fill.</p>
+      <anvil-component type="RepeatingPanel" name="top_panel" prop:item_template="Health_Booker.Items.TableRow"></anvil-component></div>
+    <div class="ui-card"><h3>Teachers</h3><p class="sub">Classes taught and average students in this period.</p>
+      <anvil-component type="RepeatingPanel" name="teachers_panel" prop:item_template="Health_Booker.Items.TableRow"></anvil-component></div>
+  </div>
+</div>

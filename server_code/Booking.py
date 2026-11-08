@@ -169,7 +169,7 @@ def sign_waiver(slug, signature, emergency="", health="", share=False):
     if len(signature) < 3:
         return C.fail("Type your full name to sign.")
     row = C.waiver(s, me)
-    vals = dict(signed=C.now(), signature=signature, emergency=C.text(emergency, 120),
+    vals: dict = dict(signed=C.now(), signature=signature, emergency=C.text(emergency, 120),
                 health=C.text(health, 600, multiline=True), share=bool(share))
     if row:
         row.update(**vals)
@@ -213,7 +213,7 @@ def my_practice():
     sent = [{"code": f["code"], "studio": f["studio"]["name"], "claimed": f["claimed_by"] is not None, "created": C.iso(f["created"])}
             for f in app_tables.friend_passes.search(sender=me)]
     return {"upcoming": upcoming, "history": history[:200], "late": late[:20], "passes": passes, "follows": follows,
-            "friend_passes": sent, "moods": MOODS}
+            "friend_passes": sent, "moods": {str(k): v for k, v in MOODS.items()}}  # Anvil can only send string keys
 
 
 @anvil.server.callable(require_user=True)

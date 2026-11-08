@@ -1,0 +1,9 @@
+<anvil-form layout="Health_Booker.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap ui-narrow">
+      <div class="ui-page-head"><div><h1>Inbox</h1><p class="muted">Notes from your studios, waitlist moves and changes to your classes.</p></div></div>
+      <anvil-component type="RepeatingPanel" name="items_panel" prop:item_template="Health_Booker.Items.InboxItem" prop:role='["ui-list-panel"]'></anvil-component>
+      <div class="ui-empty" anvil:name="empty"><i class="ic ic-inbox"></i><h2>All quiet</h2><p>When a mat opens up or a studio sends you a note, it shows up here.</p></div>
+    </div>
+  </anvil-block>
+</anvil-form>

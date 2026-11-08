@@ -1,0 +1,16 @@
+<div class="ui hb-dialog hb-roster-dlg">
+  <h2 class="dlg-h" anvil:dom-node="title"></h2>
+  <p class="muted" anvil:dom-node="summary"></p>
+  <anvil-component type="RepeatingPanel" name="people_panel" prop:item_template="Health_Booker.Items.RosterPerson" prop:role='["hb-roster"]'></anvil-component>
+  <div class="ui-empty" anvil:name="nobody"><i class="ic ic-mat"></i><h3>No one booked yet</h3><p>Bookings show up here as they come in.</p></div>
+  <div anvil:name="wait_part">
+    <h3 class="hb-roster-h">Waitlist</h3>
+    <anvil-component type="RepeatingPanel" name="wait_panel" prop:item_template="Health_Booker.Items.Line" prop:role='["hb-roster"]'></anvil-component>
+  </div>
+  <div class="ui-row hb-walkin" anvil:name="walkin">
+    <anvil-component type="TextBox" name="walkin_name" prop:placeholder="Walk-in name"></anvil-component>
+    <anvil-component type="TextBox" name="walkin_email" prop:placeholder="or their account email" prop:type="email"></anvil-component>
+    <anvil-component type="Button" name="walkin_button" prop:text="Add walk-in" prop:role='["btn", "ic-plus"]'></anvil-component>
+  </div>
+  <div class="ui-row end"><anvil-component type="Button" name="close_button" prop:text="Close" prop:role='["btn", "btn-ghost"]'></anvil-component></div>
+</div>

@@ -1,0 +1,12 @@
+<div class="mg-room-host">
+  <div class="ui-card mg-room">
+    <div class="mg-form mg-room-form">
+      <label class="ui-field"><span>Room</span><anvil-component type="TextBox" name="name_box"></anvil-component></label>
+      <label class="ui-field"><span>Rows</span><anvil-component type="TextBox" name="rows_box" prop:type="number"></anvil-component></label>
+      <label class="ui-field"><span>Per row</span><anvil-component type="TextBox" name="cols_box" prop:type="number"></anvil-component></label>
+    </div>
+    <p class="small muted" anvil:dom-node="note"></p>
+    <anvil-component type="Health_Booker.Components.MatGrid" name="mats"></anvil-component>
+    <div class="ui-row end"><anvil-component type="Button" name="save_button" prop:text="Save room" prop:role='["btn", "btn-sm", "btn-primary"]'></anvil-component></div>
+  </div>
+</div>

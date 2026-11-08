@@ -1,0 +1,25 @@
+<div class="ui hb-dialog-wrap"><div class="hb-dialog hb-done" anvil:name="box">
+  <div anvil:name="wait_part">
+    <div class="hb-done-ic"><i class="ic ic-clock"></i></div>
+    <h2 class="dlg-h" anvil:dom-node="wait_title"></h2>
+    <p class="muted">If a mat opens up, we move you in automatically and let you know. Nothing is charged until then.</p>
+  </div>
+  <div anvil:name="booked_part">
+    <div class="hb-breath" aria-hidden="true"><span anvil:dom-node="breath">Breathe in</span></div>
+    <h2 class="dlg-h">You're booked</h2>
+    <p class="muted">See you on the mat. Take a slow breath while you're here.</p>
+  </div>
+  <div class="hb-facts">
+    <div><i class="ic ic-calendar"></i><span><b anvil:dom-node="title"></b> · <span anvil:dom-node="when"></span></span></div>
+    <div><i class="ic ic-pin"></i><span anvil:dom-node="where"></span></div>
+    <div anvil:name="mat_line"><i class="ic ic-mat"></i><span anvil:dom-node="mat"></span></div>
+    <div anvil:name="pass_line"><i class="ic ic-ticket"></i><span anvil:dom-node="pass_name"></span></div>
+    <div anvil:name="cancel_line"><i class="ic ic-info"></i><span anvil:dom-node="cancel_by"></span></div>
+  </div>
+  <div class="ui-row hb-done-acts">
+    <anvil-component type="Button" name="ics_button" prop:text="Add to calendar" prop:role='["btn", "ic-download"]'></anvil-component>
+    <anvil-component type="Button" name="practice_button" prop:text="My practice" prop:role='["btn", "btn-primary"]'></anvil-component>
+    <anvil-component type="Button" name="close_button" prop:text="Close" prop:role='["btn", "btn-ghost"]'></anvil-component>
+  </div>
+</div>
+</div>

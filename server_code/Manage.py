@@ -383,7 +383,7 @@ def save_product(slug, data):
     credits = None if kind == "unlimited" or (kind == "intro" and not data.get("credits")) else int(C.num(data.get("credits"), 1, 1, 200))
     if kind == "dropin":
         credits = 1
-    vals = dict(name=name, kind=kind, credits=credits, days=int(C.num(data.get("days"), 30, 1, 730)),
+    vals: dict = dict(name=name, kind=kind, credits=credits, days=int(C.num(data.get("days"), 30, 1, 730)),
                 price=C.num(data.get("price"), 0, 0, 10000), intro_only=bool(data.get("intro_only")) or kind == "intro",
                 about=C.text(data.get("about"), 200), active=data.get("active") is not False)
     if data.get("id"):
@@ -476,7 +476,7 @@ def client_detail(slug, user_id):
     if u is None:
         return C.fail("That person doesn't exist.")
     bookings = sorted(app_tables.bookings.search(studio=s, user=u), key=lambda b: C.aware(b["start"]), reverse=True)
-    if not bookings and not app_tables.passes.search(studio=s, user=u):
+    if not bookings and not len(app_tables.passes.search(studio=s, user=u)):  # a search is always truthy: count it
         return C.fail("That person isn't a client of this studio.")
     w = C.waiver(s, u)
     return {"name": C.name_of(u), "email": u["email"],
@@ -493,7 +493,7 @@ def nudge(slug, user_id, message):
     me = C.require_user()
     s = _studio_for(slug, me)
     u = C.row_by_id(app_tables.users, user_id)
-    if u is None or not (app_tables.bookings.search(studio=s, user=u) or app_tables.passes.search(studio=s, user=u)):
+    if u is None or not (len(app_tables.bookings.search(studio=s, user=u)) or len(app_tables.passes.search(studio=s, user=u))):
         return C.fail("You can only message your own clients.")
     message = C.text(message, 600, multiline=True)
     if len(message) < 5:
@@ -544,7 +544,7 @@ def save_staff(slug, data):
     me = C.require_user()
     s = _studio_for(slug, me)
     data = data if isinstance(data, dict) else {}
-    vals = dict(name=C.text(data.get("name"), 60), bio=C.text(data.get("bio"), 600, multiline=True),
+    vals: dict = dict(name=C.text(data.get("name"), 60), bio=C.text(data.get("bio"), 600, multiline=True),
                 role=data.get("role") if data.get("role") in ("owner", "desk", "teacher") else "teacher",
                 teaches=bool(data.get("teaches", True)), styles=[x for x in C.str_list(data.get("styles")) if x in Mo.STYLES],
                 pay_base=C.num(data.get("pay_base"), 0, 0, 1000), pay_per_head=C.num(data.get("pay_per_head"), 0, 0, 100),

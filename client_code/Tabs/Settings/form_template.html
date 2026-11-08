@@ -1,0 +1,38 @@
+<div class="mg-tab">
+  <div class="mg-set">
+    <div class="ui-card mg-form">
+      <h3 class="full">Studio profile</h3>
+      <label class="ui-field"><span>Name</span><anvil-component type="TextBox" name="name_box"></anvil-component></label>
+      <label class="ui-field"><span>Tagline</span><anvil-component type="TextBox" name="tagline_box"></anvil-component></label>
+      <label class="ui-field"><span>Neighbourhood</span><anvil-component type="TextBox" name="hood_box"></anvil-component></label>
+      <label class="ui-field"><span>City</span><anvil-component type="TextBox" name="city_box"></anvil-component></label>
+      <label class="ui-field full"><span>Address</span><anvil-component type="TextBox" name="address_box"></anvil-component></label>
+      <label class="ui-field full"><span>About</span><anvil-component type="TextArea" name="about_box" prop:height="100"></anvil-component></label>
+      <div class="ui-field full"><span>Styles</span><anvil-component type="RepeatingPanel" name="styles_panel" prop:item_template="Health_Booker.Items.Chip" prop:role='["hb-chips"]'></anvil-component></div>
+      <label class="ui-field full"><span>Amenities <em>(comma separated)</em></span><anvil-component type="TextBox" name="amen_box"></anvil-component></label>
+      <label class="ui-field"><span>Languages <em>(comma separated)</em></span><anvil-component type="TextBox" name="lang_box"></anvil-component></label>
+      <label class="ui-field"><span>Free cancellation until (hours before class)</span><anvil-component type="TextBox" name="cancel_box" prop:type="number"></anvil-component></label>
+      <div class="ui-field full"><span>Colour</span><anvil-component type="RepeatingPanel" name="accent_panel" prop:item_template="Health_Booker.Items.AccentDot" prop:role='["op-acc"]'></anvil-component></div>
+      <label class="ui-field full"><span>Waiver new students sign</span><anvil-component type="TextArea" name="waiver_box" prop:height="100"></anvil-component></label>
+      <div class="full ui-row end"><anvil-component type="Button" name="save_button" prop:text="Save profile" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component></div>
+    </div>
+    <div class="mg-side-stack">
+      <div class="ui-card mg-links-card"><h3>Share and run</h3>
+        <anvil-component type="Button" name="solo_button" prop:text="Copy your direct booking link" prop:role='["btn", "btn-sm", "btn-block", "ic-copy"]'></anvil-component>
+        <p class="small muted">Shows only your studio: put it on Instagram and your website.</p>
+        <anvil-component type="Button" name="page_button" prop:text="Copy your marketplace page link" prop:role='["btn", "btn-sm", "btn-block", "ic-copy"]'></anvil-component>
+        <a class="ui-btn sm block mg-kiosk" anvil:name="kiosk_link" href="#manage"><i class="ic ic-tablet"></i>Open the check-in kiosk</a>
+      </div>
+      <div class="ui-card"><h3>Your data</h3><p class="small muted">Download everything, any day, free. No lock-in.</p>
+        <div class="hb-dlg-stack">
+          <anvil-component type="Button" name="csv_clients" prop:text="Clients (CSV)" prop:role='["btn", "btn-sm", "btn-block", "ic-download"]'></anvil-component>
+          <anvil-component type="Button" name="csv_bookings" prop:text="Bookings (CSV)" prop:role='["btn", "btn-sm", "btn-block", "ic-download"]'></anvil-component>
+          <anvil-component type="Button" name="csv_passes" prop:text="Passes and payments (CSV)" prop:role='["btn", "btn-sm", "btn-block", "ic-download"]'></anvil-component>
+        </div></div>
+    </div>
+  </div>
+  <div class="hb-section">
+    <div class="ui-row between"><h2>Rooms</h2><anvil-component type="Button" name="add_room_button" prop:text="Add a room" prop:role='["btn", "btn-sm", "ic-plus"]'></anvil-component></div>
+    <anvil-component type="RepeatingPanel" name="rooms_panel" prop:item_template="Health_Booker.Items.RoomCard" prop:role='["mg-rooms"]'></anvil-component>
+  </div>
+</div>

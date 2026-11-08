@@ -1,0 +1,66 @@
+<anvil-form layout="Health_Booker.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap" anvil:name="page">
+      <div class="ui-narrow" anvil:name="not_found"><div class="ui-empty"><i class="ic ic-calendar"></i><h2>That class isn't on the schedule any more</h2><p>It may have been moved or cancelled.</p><a class="ui-btn primary" href="#discover">Find another class</a></div></div>
+      <div anvil:name="main">
+        <a class="ui-btn ghost sm cl-back" href="#discover" anvil:name="back_link"><i class="ic ic-back"></i><span anvil:dom-node="back_text"></span></a>
+        <div class="cl-grid">
+          <div>
+            <div class="cl-top">
+              <h1 anvil:dom-node="title"></h1>
+              <div class="cl-when" anvil:dom-node="when"></div>
+            </div>
+            <div class="hb-tags" anvil:dom-node="tags"></div>
+            <div class="cl-facts">
+              <div class="cl-fact"><small>Level</small><b anvil:dom-node="level"></b></div>
+              <div class="cl-fact"><small>Intensity</small><span anvil:dom-node="leaves"></span> <b anvil:dom-node="intensity"></b></div>
+              <div class="cl-fact"><small>Where</small><b anvil:dom-node="room"></b><div class="small muted" anvil:dom-node="hood"></div></div>
+              <div class="cl-fact"><small>Mats</small><b anvil:dom-node="mats"></b><div class="small muted" anvil:dom-node="waiting"></div></div>
+            </div>
+            <p class="cl-about" anvil:dom-node="about"></p>
+            <p class="small muted" anvil:name="address"><i class="ic ic-pin"></i> <span anvil:dom-node="address_text"></span></p>
+            <div class="ui-card cl-teacher-card" anvil:name="teacher_card">
+              <div class="cl-teacher"><span class="ui-avatar" anvil:dom-node="t_initials"></span>
+                <div><div class="ui-row between"><h3 anvil:dom-node="t_name"></h3>
+                  <anvil-component type="Button" name="tfollow_button" prop:text="Follow" prop:role='["btn", "btn-sm", "ic-heart"]'></anvil-component></div>
+                  <p class="muted cl-bio" anvil:dom-node="t_bio"></p></div>
+              </div>
+              <anvil-component type="RepeatingPanel" name="reviews_panel" prop:item_template="Health_Booker.Items.ReviewCard" prop:role='["cl-reviews"]'></anvil-component>
+            </div>
+            <anvil-component type="Button" name="roster_button" prop:text="Class list and check-in" prop:role='["btn", "ic-users", "cl-roster"]'></anvil-component>
+          </div>
+          <aside class="ui-card cl-book">
+            <div class="cl-cancelled" anvil:name="cancelled_box"><i class="ic ic-x"></i> <span anvil:dom-node="cancelled_text"></span></div>
+            <div anvil:name="booked_box" class="cl-stack">
+              <div class="cl-status"><h3><i class="ic ic-check"></i><span anvil:dom-node="booked_title"></span></h3>
+                <p class="small" anvil:dom-node="booked_line"></p>
+                <p class="small muted" anvil:dom-node="booked_note"></p></div>
+              <anvil-component type="Button" name="reflect_button" prop:role='["btn", "btn-primary", "btn-block", "ic-heart"]'></anvil-component>
+              <div class="ui-row" anvil:name="booked_actions">
+                <anvil-component type="Button" name="ics_button" prop:text="Calendar" prop:role='["btn", "ic-download"]'></anvil-component>
+                <anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-danger", "ic-x"]'></anvil-component>
+              </div>
+            </div>
+            <div anvil:name="wait_box" class="cl-stack">
+              <div class="cl-status wait"><h3><i class="ic ic-clock"></i><span anvil:dom-node="wait_title"></span></h3>
+                <p class="small">We'll move you in automatically if a mat opens up, and message you. If that happens inside the cancel window, you can still cancel for free.</p></div>
+              <anvil-component type="Button" name="leave_button" prop:text="Leave the waitlist" prop:role='["btn", "btn-danger", "ic-x"]'></anvil-component>
+            </div>
+            <div class="cl-status late" anvil:name="late_box"><h3>Late cancel</h3><p class="small">You cancelled inside the window. Talk to the studio if something came up: they can forgive it.</p></div>
+            <div class="ui-note" anvil:name="past_box">This class has finished.</div>
+            <div anvil:name="book_box" class="cl-stack">
+              <div class="ui-row between"><h3 anvil:dom-node="book_title"></h3><span class="hb-left" anvil:dom-node="left"></span></div>
+              <p class="small muted" anvil:name="pick_hint">Tap a mat to pick your spot, or leave it and take any free mat.</p>
+              <anvil-component type="RepeatingPanel" name="passes_panel" prop:item_template="Health_Booker.Items.PassChoice" prop:role='["cl-pass"]'></anvil-component>
+              <div class="ui-note" anvil:name="pass_note"><span anvil:dom-node="pass_note_text"></span></div>
+              <p class="small muted" anvil:name="ws_note"><span anvil:dom-node="ws_note_text"></span></p>
+              <anvil-component type="Button" name="book_button" prop:role='["btn", "btn-primary", "btn-lg", "btn-block", "ic-check"]'></anvil-component>
+              <p class="small muted cl-free" anvil:dom-node="free_note"></p>
+            </div>
+            <anvil-component type="Health_Booker.Components.MatGrid" name="mats"></anvil-component>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

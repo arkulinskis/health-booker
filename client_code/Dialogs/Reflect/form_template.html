@@ -1,0 +1,16 @@
+<div class="ui hb-dialog">
+  <h2 class="dlg-h">How do you feel?</h2>
+  <p class="muted" anvil:dom-node="lead"></p>
+  <div class="hb-moods" role="group" aria-label="How you feel"><button type="button" class="hb-mood" anvil:name="mood_1" anvil:on-dom:click="self.mood_click" data-mood="1"><span anvil:dom-node="face_1"></span>Heavy</button><button type="button" class="hb-mood" anvil:name="mood_2" anvil:on-dom:click="self.mood_click" data-mood="2"><span anvil:dom-node="face_2"></span>Tired</button><button type="button" class="hb-mood" anvil:name="mood_3" anvil:on-dom:click="self.mood_click" data-mood="3"><span anvil:dom-node="face_3"></span>Okay</button><button type="button" class="hb-mood" anvil:name="mood_4" anvil:on-dom:click="self.mood_click" data-mood="4"><span anvil:dom-node="face_4"></span>Light</button><button type="button" class="hb-mood" anvil:name="mood_5" anvil:on-dom:click="self.mood_click" data-mood="5"><span anvil:dom-node="face_5"></span>Glowing</button></div>
+  <label class="ui-field hb-note-field"><span>A note for future you <em>(optional)</em></span>
+    <anvil-component type="TextArea" name="note_box" prop:placeholder="What felt good? What was hard?" prop:height="70"></anvil-component></label>
+  <div anvil:name="review_part" class="hb-review-part">
+    <b>Review the class</b> <span class="muted small">(optional, public, first name only)</span>
+    <div class="hb-starpick" role="group" aria-label="Stars"><button type="button" anvil:name="star_1" anvil:on-dom:click="self.star_click" data-star="1" aria-label="1 star"><i class="ic ic-star"></i></button><button type="button" anvil:name="star_2" anvil:on-dom:click="self.star_click" data-star="2" aria-label="2 stars"><i class="ic ic-star"></i></button><button type="button" anvil:name="star_3" anvil:on-dom:click="self.star_click" data-star="3" aria-label="3 stars"><i class="ic ic-star"></i></button><button type="button" anvil:name="star_4" anvil:on-dom:click="self.star_click" data-star="4" aria-label="4 stars"><i class="ic ic-star"></i></button><button type="button" anvil:name="star_5" anvil:on-dom:click="self.star_click" data-star="5" aria-label="5 stars"><i class="ic ic-star"></i></button></div>
+    <anvil-component type="TextArea" name="review_box" prop:placeholder="What would you tell a friend about this class?" prop:height="70" prop:visible="false"></anvil-component>
+  </div>
+  <div class="ui-row end">
+    <anvil-component type="Button" name="close_button" prop:text="Close" prop:role='["btn", "btn-ghost"]'></anvil-component>
+    <anvil-component type="Button" name="save_button" prop:text="Save" prop:role='["btn", "btn-primary"]'></anvil-component>
+  </div>
+</div>

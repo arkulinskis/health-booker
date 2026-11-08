@@ -1,0 +1,55 @@
+<anvil-form layout="Health_Booker.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ui-page-head"><div><h1>My practice</h1><p class="muted" anvil:dom-node="hello"></p></div>
+        <a class="ui-btn primary" href="#discover"><i class="ic ic-search"></i>Find a class</a></div>
+      <div class="hb-kpis pr-kpis">
+        <div class="hb-kpi"><b anvil:dom-node="k_month"></b><span>classes this month</span></div>
+        <div class="hb-kpi"><b anvil:dom-node="k_streak"></b><span anvil:dom-node="k_streak_word"></span><small>Any week with a class counts.</small></div>
+        <div class="hb-kpi"><b anvil:dom-node="k_hours"></b><span>hours on the mat</span></div>
+        <div class="hb-kpi"><b anvil:dom-node="k_mood"></b><span>how you usually leave</span><small anvil:dom-node="k_mood_note"></small></div>
+      </div>
+      <nav class="ui-tabs pr-tabs" aria-label="My practice">
+        <a href="#practice/upcoming" anvil:name="tab_upcoming"><i class="ic ic-calendar"></i>Upcoming <span class="count" anvil:dom-node="n_upcoming"></span></a>
+        <a href="#practice/journal" anvil:name="tab_journal"><i class="ic ic-leaf"></i>Journal</a>
+        <a href="#practice/wallet" anvil:name="tab_wallet"><i class="ic ic-wallet"></i>Wallet <span class="count" anvil:dom-node="n_wallet"></span></a>
+        <a href="#practice/following" anvil:name="tab_following"><i class="ic ic-heart"></i>Following</a>
+      </nav>
+
+      <div anvil:name="upcoming_part">
+        <anvil-component type="RepeatingPanel" name="up_panel" prop:item_template="Health_Booker.Items.DayGroup"></anvil-component>
+        <div class="ui-empty" anvil:name="no_upcoming"><svg class="hb-empty-art" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="60" cy="60" r="54" fill="var(--c-brand-soft)" stroke="none"/><circle cx="60" cy="30" r="7"/><path d="M60 38v34M60 72l-1 30M60 72q14 6 6 16q-4 4-6-2"/><path d="M60 46q-10-8-6-22M60 46q10-8 6-22"/><path d="M40 104h40" stroke="var(--c-accent-deco)"/></svg><h2>Nothing booked yet</h2><p>Your next class is a tap away.</p><a class="ui-btn primary" href="#discover">Find a class</a></div>
+      </div>
+
+      <div anvil:name="journal_part">
+        <div class="ui-empty" anvil:name="no_journal"><svg class="hb-empty-art" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="60" cy="60" r="54" fill="var(--c-brand-soft)" stroke="none"/><circle cx="60" cy="30" r="7"/><path d="M60 38v34M60 72l-1 30M60 72q14 6 6 16q-4 4-6-2"/><path d="M60 46q-10-8-6-22M60 46q10-8 6-22"/><path d="M40 104h40" stroke="var(--c-accent-deco)"/></svg><h2>Your journal starts after your first class</h2><p>Every class you come to lands here, with how you felt.</p></div>
+        <div anvil:name="journal_body">
+          <div class="pr-two">
+            <div class="ui-card"><h3>Last 12 weeks</h3><anvil-component type="Health_Booker.Components.Chart" name="heat_chart"></anvil-component></div>
+            <div class="pr-col">
+              <div class="ui-card"><h3>Your styles</h3><anvil-component type="Health_Booker.Components.Chart" name="styles_chart"></anvil-component></div>
+              <div class="ui-card pr-mood" anvil:name="mood_card"><h3>How you leave class</h3><p class="small muted" anvil:dom-node="mood_note"></p>
+                <anvil-component type="Health_Booker.Components.Chart" name="mood_chart"></anvil-component></div>
+            </div>
+          </div>
+          <div class="hb-section"><h2>Every class</h2>
+            <anvil-component type="RepeatingPanel" name="entries_panel" prop:item_template="Health_Booker.Items.JournalEntry" prop:role='["ui-list-panel"]'></anvil-component></div>
+        </div>
+      </div>
+
+      <div anvil:name="wallet_part">
+        <anvil-component type="RepeatingPanel" name="passes_panel" prop:item_template="Health_Booker.Items.PassCard" prop:role='["pr-passes"]'></anvil-component>
+        <div class="ui-empty" anvil:name="no_passes"><i class="ic ic-wallet"></i><h2>Your wallet is empty</h2><p>Passes you get at any studio land here. Intro offers are the best place to start.</p><a class="ui-btn primary" href="#discover/studios">Browse studios</a></div>
+        <div class="hb-section" anvil:name="late_part"><h2>Late cancels and no-shows</h2><p class="muted small">These used a credit. Something came up? Ask the studio: they can forgive it.</p>
+          <anvil-component type="RepeatingPanel" name="late_panel" prop:item_template="Health_Booker.Items.Line" prop:role='["ui-list-panel"]'></anvil-component></div>
+        <div class="hb-section"><h2><i class="ic ic-gift"></i> Friend passes</h2><p class="muted">With a pack or membership you can give friends a free first class: open the studio's About tab and create a link.</p>
+          <anvil-component type="RepeatingPanel" name="friends_panel" prop:item_template="Health_Booker.Items.Line" prop:role='["ui-list-panel"]'></anvil-component></div>
+      </div>
+
+      <div anvil:name="following_part">
+        <anvil-component type="RepeatingPanel" name="follow_panel" prop:item_template="Health_Booker.Items.FollowCard" prop:role='["pr-follow"]'></anvil-component>
+        <div class="ui-empty" anvil:name="no_follows"><i class="ic ic-heart"></i><h2>You don't follow anyone yet</h2><p>Follow studios and teachers, then filter Discover to just their classes.</p></div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

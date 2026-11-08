@@ -1,0 +1,12 @@
+<div class="mg-person-host">
+  <div class="ui-card mg-person">
+    <div class="head"><span class="ui-avatar" anvil:dom-node="initials"></span><div class="mg-person-who"><b anvil:dom-node="name"></b><div class="small muted mg-email" anvil:dom-node="email"></div></div><span class="ui-badge" anvil:dom-node="role"></span></div>
+    <div class="ui-badge warn mg-invited" anvil:name="invited">Invited: gets access when they sign in with this email</div>
+    <div class="nums" anvil:name="nums"><div><b anvil:dom-node="n_classes"></b><span>classes</span></div><div><b anvil:dom-node="n_avg"></b><span>avg students</span></div><div><b anvil:dom-node="n_pay"></b><span>pay</span></div><div><b anvil:dom-node="n_rating"></b><span>rating</span></div></div>
+    <div class="small muted" anvil:dom-node="rule"></div>
+    <div class="ui-row">
+      <anvil-component type="Button" name="edit_button" prop:text="Edit" prop:role='["btn", "btn-sm", "ic-edit"]'></anvil-component>
+      <anvil-component type="Button" name="remove_button" prop:text="Remove" prop:role='["btn", "btn-sm", "btn-ghost", "btn-danger"]'></anvil-component>
+    </div>
+  </div>
+</div>

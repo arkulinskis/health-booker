@@ -1,0 +1,28 @@
+<div class="hb-row-wrap">
+  <article class="hb-class" anvil:name="card">
+    <div class="hb-time"><b><span anvil:dom-node="t_clock"></span><small anvil:dom-node="t_ampm"></small></b><span anvil:dom-node="t_sub"></span></div>
+    <div class="hb-mid">
+      <h3><a anvil:dom-node="title_link" href="#discover"></a></h3>
+      <div class="hb-meta">
+        <a anvil:name="studio_link" href="#discover"><span class="hb-dot"></span><span anvil:dom-node="studio_name"></span></a>
+        <span anvil:dom-node="teacher"></span>
+        <span anvil:name="hood"><span anvil:dom-node="hood_text"></span></span>
+        <span anvil:dom-node="leaves"></span>
+      </div>
+      <div class="hb-tags" anvil:dom-node="tags"></div>
+    </div>
+    <div class="hb-side">
+      <span class="hb-left" anvil:dom-node="left"></span>
+      <span class="hb-state" anvil:name="state_booked"><i class="ic ic-check"></i>Booked</span>
+      <span class="hb-state wait" anvil:name="state_wait"><i class="ic ic-clock"></i>On waitlist</span>
+      <anvil-component type="Button" name="book_button" prop:text="Book" prop:role='["btn", "btn-sm", "btn-primary"]'></anvil-component>
+    </div>
+  </article>
+  <div class="ui-row hb-extra" anvil:name="extra">
+    <span class="ui-badge" anvil:dom-node="mat_badge"></span>
+    <span class="muted" anvil:dom-node="pass_name"></span>
+    <span class="ui-spacer"></span>
+    <anvil-component type="Button" name="cal_button" prop:text="Calendar" prop:role='["btn", "btn-ghost", "btn-sm", "ic-download"]'></anvil-component>
+    <anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-ghost", "btn-sm", "btn-danger", "ic-x"]'></anvil-component>
+  </div>
+</div>

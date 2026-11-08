@@ -1,0 +1,11 @@
+<div class="mg-client-host">
+  <div class="mg-client">
+    <span class="ui-avatar" anvil:dom-node="initials"></span>
+    <div class="mg-client-who"><b anvil:dom-node="name"></b><div class="small muted mg-email" anvil:dom-node="email"></div><div class="tags" anvil:dom-node="tags"></div></div>
+    <div class="stats small"><b anvil:dom-node="visits"></b><span anvil:dom-node="last"></span><div class="muted" anvil:dom-node="passes"></div><div class="faint" anvil:dom-node="nudged"></div></div>
+    <div class="acts ui-row">
+      <anvil-component type="Button" name="message_button" prop:text="Message" prop:role='["btn", "btn-sm", "ic-chat"]'></anvil-component>
+      <anvil-component type="Button" name="detail_button" prop:text="Details" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component>
+    </div>
+  </div>
+</div>

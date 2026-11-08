@@ -36,7 +36,7 @@ LAST = ["Fortin", "Williams", "Bouchard", "Patel", "Rossi", "Lavoie", "Kim", "CÃ
 N_STUDENTS = 140
 
 H = "Beginner-friendly"
-STUDIOS = [
+STUDIOS: list = [
     {"slug": "sage-and-stone", "name": "Sage & Stone Yoga", "hood": "Plateau-Mont-Royal", "addr": "4410 rue Saint-Denis (demo)",
      "tagline": "Slow mornings, strong practice.", "accent": "sage", "featured": True, "weight": 6,
      "about": "A sunny second-floor studio above Saint-Denis with wooden floors, big windows and a tea bar that's always on. "
@@ -378,7 +378,7 @@ def _make_classes(st, first_day, last_day, rng, members):
             if day.weekday() == wd and 3 <= (day - today).days <= 9:
                 plan.append((day, hhmm, title, style, mins, "all", 2, False, ["Props provided"], ti, 0, "workshop", price, about))
         day += dt.timedelta(days=1)
-    rows = []
+    rows: list = []
     for (day, hhmm, title, style, mins, level, inten, heated, tags, ti, ri, kind, price, about) in plan:
         room = st["rooms"][ri]
         cap = 12 if kind == "workshop" else st["caps"][ri] if "caps" in st else _cap(room)
@@ -410,7 +410,10 @@ def _make_classes(st, first_day, last_day, rng, members):
         spots = list(spots_by_room.get(d["room"].get_id(), []))
         rng.shuffle(spots)
         n_in = waiting = 0
-        for m in _pick(rng, people, want):
+        full = want > cap  # the demo's full class: keep picking past people whose pack ran out, until it's full + 3 waiting
+        for m in _pick(rng, people, len(people) if full else want):
+            if full and n_in + waiting >= want:
+                break
             past = start < now
             if d["kind"] != "workshop" and m["credits"] is not None and m["credits"] <= 0:
                 continue

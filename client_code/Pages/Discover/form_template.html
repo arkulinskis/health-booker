@@ -1,0 +1,43 @@
+<anvil-form layout="Health_Booker.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ds-head">
+        <div>
+          <h1 anvil:dom-node="title">Find your class</h1>
+          <p class="muted ds-lead" anvil:dom-node="lead"></p>
+        </div>
+        <a class="ui-btn ghost sm" href="#open" anvil:name="list_link"><i class="ic ic-door"></i>List your studio</a>
+      </div>
+      <nav class="ui-tabs ds-tabs" aria-label="Classes or studios">
+        <a href="#discover" anvil:name="tab_classes"><i class="ic ic-calendar"></i>Classes</a>
+        <a href="#discover/studios" anvil:name="tab_studios"><i class="ic ic-door"></i>Studios <span class="count" anvil:dom-node="studio_count"></span></a>
+      </nav>
+
+      <div anvil:name="classes_part">
+        <anvil-component type="RepeatingPanel" name="days_panel" prop:item_template="Health_Booker.Items.DayChip" prop:role='["ds-days"]'></anvil-component>
+        <div class="ds-bar">
+          <label class="ds-search"><i class="ic ic-search"></i><span class="ui-sr">Search</span>
+            <anvil-component type="TextBox" name="search_box" prop:placeholder="Class, studio, teacher or area" prop:type="search"></anvil-component>
+          </label>
+          <anvil-component type="DropDown" name="style_box"></anvil-component>
+          <anvil-component type="DropDown" name="hood_box"></anvil-component>
+        </div>
+        <anvil-component type="RepeatingPanel" name="chips_panel" prop:item_template="Health_Booker.Items.Chip" prop:role='["hb-chips", "scroll"]'></anvil-component>
+        <button type="button" class="ds-match" anvil:on-dom:click="self.matcher_click"><i class="ic ic-sparkle"></i><span><b>Not sure what to try?</b><span class="muted small">Four quick questions and we'll suggest three classes.</span></span></button>
+        <div class="ds-count">
+          <anvil-component type="Label" name="count_label"></anvil-component>
+          <anvil-component type="Button" name="clear_button" prop:role='["btn", "btn-ghost", "btn-sm", "ic-x"]'></anvil-component>
+        </div>
+        <anvil-component type="RepeatingPanel" name="list_panel" prop:item_template="Health_Booker.Items.ClassRow" prop:role='["hb-list", "ds-list"]'></anvil-component>
+        <div class="ui-empty ds-empty" anvil:name="empty">
+          <svg class="hb-empty-art" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="60" cy="60" r="54" fill="var(--c-brand-soft)" stroke="none"/><circle cx="60" cy="30" r="7"/><path d="M60 38v34M60 72l-1 30M60 72q14 6 6 16q-4 4-6-2"/><path d="M60 46q-10-8-6-22M60 46q10-8 6-22"/><path d="M40 104h40" stroke="var(--c-accent-deco)"/></svg>
+          <h3>No classes match</h3><p>Try another day, or clear a filter or two.</p>
+        </div>
+      </div>
+
+      <div anvil:name="studios_part">
+        <anvil-component type="RepeatingPanel" name="studios_panel" prop:item_template="Health_Booker.Items.StudioCard" prop:role='["ds-studios"]'></anvil-component>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

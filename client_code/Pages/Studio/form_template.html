@@ -1,0 +1,81 @@
+<anvil-form layout="Health_Booker.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="st-page">
+      <div class="ui-wrap ui-narrow" anvil:name="not_found"><div class="ui-empty"><i class="ic ic-door"></i><h2>That studio isn't on Health Booker</h2><p>It may have closed, or the link is wrong.</p><a class="ui-btn primary" href="#discover/studios">See all studios</a></div></div>
+      <div class="st-preview" anvil:name="preview"><i class="ic ic-lock"></i> <span anvil:dom-node="preview_text"></span></div>
+      <section class="st-hero" anvil:name="hero">
+        <div class="ui-wrap">
+          <a class="ui-btn ghost sm st-back" href="#discover/studios" anvil:name="back_link"><i class="ic ic-back"></i>All studios</a>
+          <h1 anvil:dom-node="name"></h1>
+          <p class="tag" anvil:dom-node="tagline"></p>
+          <div class="hb-meta">
+            <span><i class="ic ic-pin"></i> <span anvil:dom-node="where"></span></span>
+            <span><span anvil:dom-node="stars"></span> <span anvil:dom-node="rating"></span></span>
+            <span anvil:name="langs"><i class="ic ic-globe"></i> <span anvil:dom-node="langs_text"></span></span>
+          </div>
+          <div class="st-actions">
+            <anvil-component type="Button" name="follow_button" prop:text="Follow" prop:role='["btn", "ic-heart"]'></anvil-component>
+            <anvil-component type="Button" name="share_button" prop:text="Share" prop:role='["btn", "ic-share"]'></anvil-component>
+            <a class="ui-btn primary" href="#manage" anvil:name="manage_link"><i class="ic ic-door"></i>Manage studio</a>
+          </div>
+        </div>
+      </section>
+      <div class="ui-wrap" anvil:name="body">
+        <div class="st-grid">
+          <div>
+            <nav class="ui-tabs" aria-label="Studio">
+              <anvil-component type="Button" name="tab_schedule" prop:text="Schedule" prop:role='["tab", "ic-calendar"]'></anvil-component>
+              <anvil-component type="Button" name="tab_pricing" prop:text="Pricing" prop:role='["tab", "ic-ticket"]'></anvil-component>
+              <anvil-component type="Button" name="tab_teachers" prop:text="Teachers" prop:role='["tab", "ic-users"]'></anvil-component>
+              <anvil-component type="Button" name="tab_reviews" prop:text="Reviews" prop:role='["tab", "ic-star"]'></anvil-component>
+              <anvil-component type="Button" name="tab_about" prop:text="About" prop:role='["tab", "ic-info"]'></anvil-component>
+            </nav>
+            <div anvil:name="schedule_part">
+              <anvil-component type="RepeatingPanel" name="days_panel" prop:item_template="Health_Booker.Items.DayGroup"></anvil-component>
+              <div class="ui-row st-more" anvil:name="more_row">
+                <anvil-component type="Button" name="more_button" prop:text="Show the following week" prop:role='["btn", "ic-calendar"]'></anvil-component>
+              </div>
+              <div class="ui-empty" anvil:name="no_classes"><svg class="hb-empty-art" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="60" cy="60" r="54" fill="var(--c-brand-soft)" stroke="none"/><circle cx="60" cy="30" r="7"/><path d="M60 38v34M60 72l-1 30M60 72q14 6 6 16q-4 4-6-2"/><path d="M60 46q-10-8-6-22M60 46q10-8 6-22"/><path d="M40 104h40" stroke="var(--c-accent-deco)"/></svg><h2>No classes on the schedule yet</h2><p anvil:dom-node="no_classes_text"></p></div>
+            </div>
+            <div anvil:name="pricing_part">
+              <anvil-component type="RepeatingPanel" name="products_panel" prop:item_template="Health_Booker.Items.ProductCard" prop:role='["st-products"]'></anvil-component>
+              <p class="ui-hint st-hint"><i class="ic ic-info"></i> You pay <span anvil:dom-node="pay_studio"></span> directly at your first visit. Health Booker adds no fees.</p>
+            </div>
+            <div anvil:name="teachers_part">
+              <anvil-component type="RepeatingPanel" name="teachers_panel" prop:item_template="Health_Booker.Items.TeacherCard" prop:role='["st-teachers"]'></anvil-component>
+              <div class="ui-empty" anvil:name="no_teachers"><i class="ic ic-users"></i><h2>No teachers listed yet</h2></div>
+            </div>
+            <div anvil:name="reviews_part">
+              <anvil-component type="RepeatingPanel" name="reviews_panel" prop:item_template="Health_Booker.Items.ReviewCard" prop:role='["ui-list-panel"]'></anvil-component>
+              <p class="ui-hint st-hint" anvil:name="reviews_hint">Only people who came to a class can review it.</p>
+              <div class="ui-empty" anvil:name="no_reviews"><i class="ic ic-star"></i><h2>No reviews yet</h2><p>Reviews come from people who came to a class.</p></div>
+            </div>
+            <div anvil:name="about_part">
+              <div class="ui-card">
+                <p class="st-about" anvil:dom-node="about"></p>
+                <div anvil:name="amen_block"><h4>Amenities</h4><div class="st-amen" anvil:dom-node="amenities"></div></div>
+                <h4 class="st-h4">Styles</h4><div class="hb-tags" anvil:dom-node="styles"></div>
+                <h4 class="st-h4">Policies</h4>
+                <p class="small muted" anvil:dom-node="policy"></p>
+                <details><summary class="small">Read the waiver</summary><p class="small muted st-waiver" anvil:dom-node="waiver"></p></details>
+              </div>
+              <div class="ui-card st-gift" anvil:name="gift_card">
+                <h3><i class="ic ic-gift"></i> Bring a friend</h3>
+                <p class="muted" anvil:dom-node="gift_text"></p>
+                <anvil-component type="Button" name="gift_button" prop:text="Create a friend pass link" prop:role='["btn", "btn-primary", "ic-share"]'></anvil-component>
+              </div>
+            </div>
+          </div>
+          <aside class="st-side">
+            <div class="st-intro" anvil:name="intro"><span>New here?</span><b anvil:dom-node="intro_price"></b><div anvil:dom-node="intro_name"></div>
+              <anvil-component type="Button" name="intro_button" prop:text="Get the intro offer" prop:role='["btn", "btn-sm", "ic-ticket"]'></anvil-component></div>
+            <div class="ui-card tight" anvil:name="mine_card"><h4>Your passes here</h4>
+              <anvil-component type="RepeatingPanel" name="mine_panel" prop:item_template="Health_Booker.Items.PassLine"></anvil-component></div>
+            <div class="ui-card tight"><h4>Good to know</h4><p class="small muted" anvil:dom-node="good"></p></div>
+          </aside>
+        </div>
+        <p class="st-powered" anvil:name="powered">Booking by <a href="#landing">Health Booker</a>: no fees, one account for every studio.</p>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

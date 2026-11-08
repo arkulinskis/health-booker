@@ -1,0 +1,14 @@
+<div class="mg-tab">
+  <div class="mg-hint" anvil:name="drift_hint"><i class="ic ic-heart"></i><div class="mg-hint-body"><b anvil:dom-node="drift_title"></b><div class="small muted">A short personal note brings many of them back.</div></div>
+    <anvil-component type="Button" name="drift_button" prop:text="See who" prop:role='["btn", "btn-sm"]'></anvil-component></div>
+  <anvil-component type="RepeatingPanel" name="tags_panel" prop:item_template="Health_Booker.Items.Chip" prop:role='["hb-chips", "mg-ctags"]'></anvil-component>
+  <div class="ui-row mg-csearch">
+    <anvil-component type="TextBox" name="search_box" prop:placeholder="Search name or email" prop:type="search" prop:role='["mg-search"]'></anvil-component>
+    <anvil-component type="Button" name="nudge_all_button" prop:role='["btn", "ic-chat"]'></anvil-component>
+    <span class="ui-spacer"></span>
+    <anvil-component type="Button" name="export_button" prop:text="Export CSV" prop:role='["btn", "btn-sm", "btn-ghost", "ic-download"]'></anvil-component>
+  </div>
+  <anvil-component type="RepeatingPanel" name="clients_panel" prop:item_template="Health_Booker.Items.ClientRow" prop:role='["ui-list-panel"]'></anvil-component>
+  <div class="ui-row mg-more" anvil:name="more_row"><anvil-component type="Button" name="more_button" prop:role='["btn"]'></anvil-component></div>
+  <div class="ui-empty" anvil:name="empty"><i class="ic ic-users"></i><h3>No clients here</h3><p anvil:dom-node="empty_text"></p></div>
+</div>

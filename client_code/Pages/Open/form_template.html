@@ -1,0 +1,45 @@
+<anvil-form layout="Health_Booker.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ui-narrow op-guest" anvil:name="guest">
+        <h1>Bring your studio to Health Booker</h1>
+        <p class="muted op-lead">For studio owners: set up your schedule, passes and team in an afternoon. Free while we're in early access.</p>
+        <anvil-component type="Button" name="start_button" prop:text="Create an account to start" prop:role='["btn", "btn-primary", "btn-lg", "ic-door"]'></anvil-component>
+        <div class="ui-card op-perks-card"><h3>Every studio gets</h3><ul class="op-perks"><li>No commission on bookings, no contract</li><li>Pick-a-mat, waitlists and intro offers included</li><li>Teacher subs and pay statements</li><li>Your own booking page with no other studios</li><li>Export your data any day</li></ul></div>
+      </div>
+      <div anvil:name="member">
+        <div class="ui-page-head"><div><h1>Open your studio</h1><p class="muted" anvil:dom-node="lead"></p></div></div>
+        <div class="op-grid">
+          <div class="ui-card hb-form-stack">
+            <label class="ui-field"><span>Studio name</span><anvil-component type="TextBox" name="name_box" prop:placeholder="e.g. Maple Leaf Yoga"></anvil-component></label>
+            <label class="ui-field"><span>Tagline <em>(one line)</em></span><anvil-component type="TextBox" name="tagline_box" prop:placeholder="What makes your studio yours?"></anvil-component></label>
+            <div class="op-row">
+              <label class="ui-field"><span>Neighbourhood</span><anvil-component type="TextBox" name="hood_box" prop:placeholder="e.g. Villeray"></anvil-component></label>
+              <label class="ui-field"><span>City</span><anvil-component type="TextBox" name="city_box" prop:text="Montréal"></anvil-component></label>
+            </div>
+            <label class="ui-field"><span>Address</span><anvil-component type="TextBox" name="address_box" prop:placeholder="Street and number"></anvil-component></label>
+            <div class="ui-field"><span>Styles you teach</span>
+              <anvil-component type="RepeatingPanel" name="styles_panel" prop:item_template="Health_Booker.Items.Chip" prop:role='["hb-chips"]'></anvil-component></div>
+            <label class="ui-field"><span>About the studio</span><anvil-component type="TextArea" name="about_box" prop:placeholder="The space, the vibe, who it's for" prop:height="100"></anvil-component></label>
+            <div class="ui-field"><span>Colour</span>
+              <anvil-component type="RepeatingPanel" name="accent_panel" prop:item_template="Health_Booker.Items.AccentDot" prop:role='["op-acc"]'></anvil-component></div>
+            <div class="op-row">
+              <label class="ui-field"><span>Main room: rows of mats</span><anvil-component type="TextBox" name="rows_box" prop:type="number" prop:text="4"></anvil-component></label>
+              <label class="ui-field"><span>Mats per row</span><anvil-component type="TextBox" name="cols_box" prop:type="number" prop:text="5"></anvil-component></label>
+            </div>
+            <label class="ui-field"><span>Languages you teach in</span><anvil-component type="DropDown" name="lang_box"></anvil-component></label>
+            <anvil-component type="Label" name="message" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+            <div class="ui-row end"><anvil-component type="Button" name="open_button" prop:text="Open my studio" prop:role='["btn", "btn-primary", "btn-lg", "ic-check"]'></anvil-component></div>
+            <p class="ui-hint" anvil:dom-node="hint"></p>
+          </div>
+          <aside class="op-side">
+            <div class="ds-studio op-preview" anvil:name="preview"><div class="ds-cover"></div><div class="in"><h3 anvil:dom-node="p_name"></h3>
+              <div class="hb-meta"><i class="ic ic-pin"></i><span anvil:dom-node="p_hood"></span></div><p class="muted small" anvil:dom-node="p_tag"></p>
+              <div class="hb-tags" anvil:dom-node="p_styles"></div><div class="intro"><span anvil:dom-node="p_room"></span><b>Preview</b></div></div></div>
+            <div class="ui-card"><h3>Every studio gets</h3><ul class="op-perks"><li>No commission on bookings, no contract</li><li>Pick-a-mat, waitlists and intro offers included</li><li>Teacher subs and pay statements</li><li>Your own booking page with no other studios</li><li>Export your data any day</li></ul></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

@@ -1,0 +1,19 @@
+<div class="ui hb-dialog ds-matcher">
+  <h2 class="dlg-h">Find my class</h2>
+  <p class="muted">From every studio, over the next week.</p>
+  <div class="ds-q"><b>How do you want to feel after?</b>
+    <anvil-component type="RepeatingPanel" name="feel_panel" prop:item_template="Health_Booker.Items.Chip" prop:role='["hb-chips"]'></anvil-component></div>
+  <div class="ds-q"><b>How much yoga have you done?</b>
+    <anvil-component type="RepeatingPanel" name="exp_panel" prop:item_template="Health_Booker.Items.Chip" prop:role='["hb-chips"]'></anvil-component></div>
+  <div class="ds-q"><b>When suits you?</b>
+    <anvil-component type="RepeatingPanel" name="when_panel" prop:item_template="Health_Booker.Items.Chip" prop:role='["hb-chips"]'></anvil-component></div>
+  <div class="ds-q"><b>Heat?</b>
+    <anvil-component type="RepeatingPanel" name="heat_panel" prop:item_template="Health_Booker.Items.Chip" prop:role='["hb-chips"]'></anvil-component></div>
+  <div anvil:name="results">
+    <h3>Try one of these</h3>
+    <anvil-component type="RepeatingPanel" name="results_panel" prop:item_template="Health_Booker.Items.MatchResult" prop:role='["ui-list-panel"]'></anvil-component>
+  </div>
+  <div class="ui-row end">
+    <anvil-component type="Button" name="close_button" prop:text="Close" prop:role='["btn", "btn-ghost"]'></anvil-component>
+  </div>
+</div>

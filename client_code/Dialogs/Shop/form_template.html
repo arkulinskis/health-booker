@@ -1,0 +1,10 @@
+<div class="ui hb-dialog">
+  <h2 class="dlg-h">Choose a pass</h2>
+  <p class="muted" anvil:dom-node="lead"></p>
+  <anvil-component type="RepeatingPanel" name="products_panel" prop:item_template="Health_Booker.Items.ShopProduct" prop:role='["hb-shop"]'></anvil-component>
+  <p class="ui-hint hb-shop-hint"><i class="ic ic-info"></i> Health Booker doesn't take card payments yet: you pay the studio at your first visit (card, cash or e-Transfer). No fees on top.</p>
+  <div class="ui-row end">
+    <anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component>
+    <anvil-component type="Button" name="get_button" prop:text="Get this pass" prop:role='["btn", "btn-primary", "ic-ticket"]'></anvil-component>
+  </div>
+</div>

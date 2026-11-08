@@ -1,0 +1,17 @@
+<anvil-form layout="Health_Booker.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ks" anvil:name="page">
+      <div class="ks-top"><div><h1 anvil:dom-node="title"></h1></div><div class="ks-clock" anvil:dom-node="clock"></div></div>
+      <div class="ui-row">
+        <anvil-component type="TextBox" name="search_box" prop:placeholder="Find your name" prop:type="search" prop:role='["ks-search"]'></anvil-component>
+        <span class="ui-spacer"></span>
+        <a class="ui-btn ghost sm" anvil:name="exit_link" href="#manage"><i class="ic ic-back"></i>Exit kiosk</a>
+      </div>
+      <anvil-component type="RepeatingPanel" name="classes_panel" prop:item_template="Health_Booker.Items.KioskClass"></anvil-component>
+      <div class="ui-empty ks-empty" anvil:name="empty"><svg class="hb-empty-art" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="60" cy="60" r="54" fill="var(--c-brand-soft)" stroke="none"/><circle cx="60" cy="30" r="7"/><path d="M60 38v34M60 72l-1 30M60 72q14 6 6 16q-4 4-6-2"/><path d="M60 46q-10-8-6-22M60 46q10-8 6-22"/><path d="M40 104h40" stroke="var(--c-accent-deco)"/></svg><h2>No more classes today</h2><p>See you tomorrow!</p></div>
+      <div class="ks-welcome" anvil:name="welcome" anvil:on-dom:click="self.welcome_click" role="status">
+        <div><div class="hb-breath"><span>Breathe in</span></div><h2 anvil:dom-node="w_title"></h2><p class="muted" anvil:dom-node="w_text"></p></div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

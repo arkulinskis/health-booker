@@ -1063,53 +1063,58 @@ metadata:
   title: 'Health Booker: book yoga classes across Montréal studios'
 name: Health Booker
 native_deps:
-  head_html: "<script src=\"_/theme/legal-kit.js?v=48a91f7c47\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/healthbooker.json\
-    \ and run seo.py, not here) -->\n<link rel=\"canonical\" href=\"https://health-booker.anvil.app/\">\n<meta name=\"robots\"\
-    \ content=\"index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1\">\n<meta name=\"keywords\" content=\"\
-    yoga classes Montreal, book yoga class, yoga studio software, Mindbody alternative, yoga studio scheduling, class booking\
-    \ app, yoga en français Montréal, studio management no commission, hot yoga Montreal\">\n<meta name=\"author\" content=\"\
-    Arkvital\">\n<meta property=\"og:type\" content=\"website\">\n<meta property=\"og:site_name\" content=\"Health Booker\"\
-    >\n<meta property=\"og:title\" content=\"Health Booker: book yoga classes across Montréal studios\">\n<meta property=\"\
-    og:description\" content=\"Find and book yoga classes across Montréal studios with one account. Studios get scheduling,\
-    \ passes, teacher subs and pay, with no commission and no contract.\">\n<meta property=\"og:locale\" content=\"en_CA\"\
-    >\n<meta property=\"og:url\" content=\"https://health-booker.anvil.app/\">\n<meta property=\"og:image\" content=\"https://health-booker.anvil.app/_/theme/og-image.png\"\
-    >\n<meta property=\"og:image:width\" content=\"1200\"><meta property=\"og:image:height\" content=\"630\">\n<meta property=\"\
-    og:image:alt\" content=\"Health Booker: Book yoga across Montréal&#x27;s studios with one account\">\n<meta name=\"twitter:card\"\
-    \ content=\"summary_large_image\">\n<meta name=\"twitter:title\" content=\"Health Booker: book yoga classes across Montréal\
-    \ studios\">\n<meta name=\"twitter:description\" content=\"Find and book yoga classes across Montréal studios with one\
-    \ account. Studios get scheduling, passes, teacher subs and pay, with no commission and no contract.\">\n<meta name=\"\
-    twitter:image\" content=\"https://health-booker.anvil.app/_/theme/og-image.png\">\n<link rel=\"alternate\" type=\"text/plain\"\
-    \ title=\"Health Booker for AI assistants\" href=\"https://health-booker.anvil.app/llms.txt\">\n<script type=\"application/ld+json\"\
-    >{\"@context\": \"https://schema.org\", \"@graph\": [{\"@type\": \"WebApplication\", \"@id\": \"https://health-booker.anvil.app/#app\"\
-    , \"name\": \"Health Booker\", \"url\": \"https://health-booker.anvil.app/\", \"description\": \"Find and book yoga classes\
-    \ across Montréal studios with one account. Studios get scheduling, passes, teacher subs and pay, with no commission and\
-    \ no contract.\", \"image\": \"https://health-booker.anvil.app/_/theme/og-image.png\", \"inLanguage\": \"en\", \"publisher\"\
-    : {\"@id\": \"https://arkvital.com/#org\"}, \"keywords\": \"yoga classes Montreal, book yoga class, yoga studio software,\
-    \ Mindbody alternative, yoga studio scheduling, class booking app, yoga en français Montréal, studio management no commission,\
-    \ hot yoga Montreal\", \"applicationCategory\": \"HealthApplication\", \"operatingSystem\": \"Any (web browser)\", \"\
-    browserRequirements\": \"Requires JavaScript and a modern web browser\", \"featureList\": [\"Every studio's classes for\
-    \ the next 7 days in one place\", \"Filters for style, neighbourhood, heat, level and classes en français\", \"A class\
-    \ matcher: four questions, three suggested classes\", \"Pick your mat, fair waitlists and one pass wallet\", \"Studio\
-    \ back office: schedule, passes, subs, teacher pay and insights\", \"No commission, no contract, free data export\"],\
-    \ \"audience\": {\"@type\": \"Audience\", \"audienceType\": \"Yoga students in Montréal, and the independent studios,\
-    \ front desks and teachers who serve them\"}}, {\"@type\": \"WebSite\", \"@id\": \"https://health-booker.anvil.app/#site\"\
-    , \"url\": \"https://health-booker.anvil.app/\", \"name\": \"Health Booker\", \"publisher\": {\"@id\": \"https://arkvital.com/#org\"\
-    }}, {\"@type\": \"Organization\", \"@id\": \"https://arkvital.com/#org\", \"name\": \"Arkvital\", \"url\": \"https://arkvital.com\"\
-    , \"email\": \"arkvital@outlook.com\", \"address\": {\"@type\": \"PostalAddress\", \"addressLocality\": \"Montreal\",\
-    \ \"addressRegion\": \"QC\", \"addressCountry\": \"CA\"}}]}</script>\n<!-- seo:end -->\n<meta name=\"viewport\" content=\"\
-    width=device-width, initial-scale=1, viewport-fit=cover\">\n<meta name=\"theme-color\" content=\"#F6F1E9\">\n<meta name=\"\
-    apple-mobile-web-app-capable\" content=\"yes\">\n<link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n<link\
-    \ rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n<link href=\"https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap\"\
-    \ rel=\"stylesheet\">\n<link id=\"ui-favicon\" rel=\"icon\" type=\"image/svg+xml\" href=\"_/theme/icon.svg?v=9d47de3d1d\"\
-    >\n<link rel=\"apple-touch-icon\" href=\"_/theme/icon-180.png?v=9d47de3d1d\">\n<script>\n/* Keep our tab icon: Anvil adds\
-    \ its own <link rel=\"icon\">, so drop any other icon link. */\n(function () {\n  function keep() {\n    var ours = document.getElementById('ui-favicon');\n\
-    \    if (!ours) return;\n    document.querySelectorAll('link[rel~=\"icon\"]').forEach(function (l) { if (l !== ours) l.remove();\
-    \ });\n  }\n  keep();\n  document.addEventListener('DOMContentLoaded', keep);\n  window.addEventListener('load', keep);\n\
-    })();\n</script>\n\n<!-- Prepsto feedback panel: every \"Submit feedback\" link and button opens it (it is the only feedback\
-    \ channel). No floating button, no cookies, nothing loads until it is opened. Codes: APP_MAKER/prepsto-links.json -->\n\
-    <script src=\"https://prepsto.com/_/theme/widget.js\" data-prepsto=\"4vzaa4r\" data-button=\"false\" data-label=\"Submit\
-    \ feedback\" async></script>\n<link rel=\"stylesheet\" href=\"_/theme/app.css?v=7be903533d\">\n<script src=\"_/theme/app.js?v=8910e4ba77\"\
-    ></script>\n"
+  head_html: |
+    <script src="_/theme/legal-kit.js?v=48a91f7c47"></script>
+    <!-- seo:start (APP_MAKER/seo: edit seo/apps/healthbooker.json and run seo.py, not here) -->
+    <link rel="canonical" href="https://health-booker.anvil.app/">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="keywords" content="yoga classes Montreal, book yoga class, yoga studio software, Mindbody alternative, yoga studio scheduling, class booking app, yoga en français Montréal, studio management no commission, hot yoga Montreal">
+    <meta name="author" content="Arkvital">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Health Booker">
+    <meta property="og:title" content="Health Booker: book yoga classes across Montréal studios">
+    <meta property="og:description" content="Find and book yoga classes across Montréal studios with one account. Studios get scheduling, passes, teacher subs and pay, with no commission and no contract.">
+    <meta property="og:locale" content="en_CA">
+    <meta property="og:url" content="https://health-booker.anvil.app/">
+    <meta property="og:image" content="https://health-booker.anvil.app/_/theme/og-image.png">
+    <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Health Booker: Book yoga across Montréal&#x27;s studios with one account">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Health Booker: book yoga classes across Montréal studios">
+    <meta name="twitter:description" content="Find and book yoga classes across Montréal studios with one account. Studios get scheduling, passes, teacher subs and pay, with no commission and no contract.">
+    <meta name="twitter:image" content="https://health-booker.anvil.app/_/theme/og-image.png">
+    <link rel="alternate" type="text/plain" title="Health Booker for AI assistants" href="https://health-booker.anvil.app/llms.txt">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "@id": "https://health-booker.anvil.app/#app", "name": "Health Booker", "url": "https://health-booker.anvil.app/", "description": "Find and book yoga classes across Montréal studios with one account. Studios get scheduling, passes, teacher subs and pay, with no commission and no contract.", "image": "https://health-booker.anvil.app/_/theme/og-image.png", "inLanguage": "en", "publisher": {"@id": "https://arkvital.com/#org"}, "keywords": "yoga classes Montreal, book yoga class, yoga studio software, Mindbody alternative, yoga studio scheduling, class booking app, yoga en français Montréal, studio management no commission, hot yoga Montreal", "applicationCategory": "HealthApplication", "operatingSystem": "Any (web browser)", "browserRequirements": "Requires JavaScript and a modern web browser", "featureList": ["Every studio's classes for the next 7 days in one place", "Filters for style, neighbourhood, heat, level and classes en français", "A class matcher: four questions, three suggested classes", "Pick your mat, fair waitlists and one pass wallet", "Studio back office: schedule, passes, subs, teacher pay and insights", "No commission, no contract, free data export"], "audience": {"@type": "Audience", "audienceType": "Yoga students in Montréal, and the independent studios, front desks and teachers who serve them"}}, {"@type": "WebSite", "@id": "https://health-booker.anvil.app/#site", "url": "https://health-booker.anvil.app/", "name": "Health Booker", "publisher": {"@id": "https://arkvital.com/#org"}}, {"@type": "Organization", "@id": "https://arkvital.com/#org", "name": "Arkvital", "url": "https://arkvital.com", "email": "arkvital@outlook.com", "address": {"@type": "PostalAddress", "addressLocality": "Montreal", "addressRegion": "QC", "addressCountry": "CA"}}]}</script>
+    <!-- seo:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#F6F1E9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- design-ok: overused-font (Fraunces is the brand's display face; facelifts keep the fonts) -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <link id="ui-favicon" rel="icon" type="image/svg+xml" href="_/theme/icon.svg?v=776de64219">
+    <link rel="apple-touch-icon" href="_/theme/icon-180.png?v=cad357b317">
+    <script>
+    /* Keep our tab icon: Anvil adds its own <link rel="icon">, so drop any other icon link. */
+    (function () {
+      function keep() {
+        var ours = document.getElementById('ui-favicon');
+        if (!ours) return;
+        document.querySelectorAll('link[rel~="icon"]').forEach(function (l) { if (l !== ours) l.remove(); });
+      }
+      keep();
+      document.addEventListener('DOMContentLoaded', keep);
+      window.addEventListener('load', keep);
+    })();
+    </script>
+
+    <!-- Prepsto feedback panel: every "Submit feedback" link and button opens it (it is the only feedback channel). No floating button, no cookies, nothing loads until it is opened. Codes: APP_MAKER/prepsto-links.json -->
+    <script src="https://prepsto.com/_/theme/widget.js" data-prepsto="4vzaa4r" data-button="false" data-label="Submit feedback" async></script>
+    <link rel="stylesheet" href="_/theme/icons.css?v=efe79bf8f4">
+    <link rel="stylesheet" href="_/theme/app.css?v=2af5d99c19">
+    <script src="_/theme/app-kit.js?v=885d91650c"></script>
+    <script src="_/theme/hb-draw.js?v=489bd6e826"></script>
 package_name: Health_Booker
 runtime_options:
   client_version: '3'
@@ -1137,5 +1142,5 @@ services:
   server_config: {}
   source: /runtime/services/google.yml
 startup:
-  module: Main
-  type: form
+  module: startup
+  type: module

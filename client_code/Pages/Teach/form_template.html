@@ -1,0 +1,57 @@
+<anvil-form layout="Health_Booker.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ui-narrow" anvil:name="no_team"><div class="ui-empty"><svg class="hb-empty-art" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="60" cy="60" r="54" fill="var(--c-brand-soft)" stroke="none"/><circle cx="60" cy="30" r="7"/><path d="M60 38v34M60 72l-1 30M60 72q14 6 6 16q-4 4-6-2"/><path d="M60 46q-10-8-6-22M60 46q10-8 6-22"/><path d="M40 104h40" stroke="var(--c-accent-deco)"/></svg><h2>You're not on a studio team yet</h2>
+        <p>When a studio owner adds you (with the email you sign in with), your classes, class lists, subs and pay show up here.</p>
+        <a class="ui-btn" href="#open">Or open your own studio</a></div></div>
+      <div anvil:name="main">
+        <div class="ui-page-head"><div><h1>Teach</h1><p class="muted" anvil:dom-node="studios"></p></div></div>
+        <div class="hb-kpis">
+          <div class="hb-kpi"><b anvil:dom-node="k_up"></b><span>classes in the next 2 weeks</span></div>
+          <div class="hb-kpi"><b anvil:dom-node="k_pay"></b><span>earned this month so far</span><small anvil:dom-node="k_pay_note"></small></div>
+          <div class="hb-kpi"><b anvil:dom-node="k_subs"></b><span anvil:dom-node="k_subs_word"></span></div>
+          <div class="hb-kpi"><b anvil:dom-node="k_rating"></b><span>your rating</span><small anvil:dom-node="k_rating_note"></small></div>
+        </div>
+        <nav class="ui-tabs tc-tabs" aria-label="Teach">
+          <a href="#teach/classes" anvil:name="tab_classes"><i class="ic ic-calendar"></i>My classes</a>
+          <a href="#teach/subs" anvil:name="tab_subs"><i class="ic ic-swap"></i>Subs <span class="count" anvil:dom-node="n_subs"></span></a>
+          <a href="#teach/pay" anvil:name="tab_pay"><i class="ic ic-wallet"></i>Pay</a>
+          <a href="#teach/reviews" anvil:name="tab_reviews"><i class="ic ic-star"></i>Reviews</a>
+        </nav>
+        <div anvil:name="classes_part">
+          <anvil-component type="RepeatingPanel" name="days_panel" prop:item_template="Health_Booker.Items.DayGroup"></anvil-component>
+          <div class="ui-empty" anvil:name="no_classes"><i class="ic ic-calendar"></i><h2>No classes in the next two weeks</h2></div>
+        </div>
+        <div anvil:name="subs_part">
+          <p class="muted">Covering is one tap: the class moves to you straight away, the owner and your colleague are told, and so are the students.</p>
+          <h3 class="tc-h">Colleagues who need a sub</h3>
+          <anvil-component type="RepeatingPanel" name="open_panel" prop:item_template="Health_Booker.Items.SubCard" prop:role='["ui-list-panel"]'></anvil-component>
+          <div class="ui-empty tc-empty" anvil:name="no_open"><i class="ic ic-check"></i><p>No open requests. Everyone's covered.</p></div>
+          <h3 class="tc-h">Your requests</h3>
+          <anvil-component type="RepeatingPanel" name="mine_panel" prop:item_template="Health_Booker.Items.SubCard" prop:role='["ui-list-panel"]'></anvil-component>
+          <p class="muted small" anvil:name="no_mine">Need a class covered? Use "Ask for a sub" on it in My classes.</p>
+        </div>
+        <div anvil:name="pay_part">
+          <div class="ui-row between tc-month">
+            <div class="ui-row">
+              <anvil-component type="Button" name="prev_button" prop:text="Previous month" prop:role='["btn", "btn-icon", "ic-back"]'></anvil-component>
+              <b class="tc-month-name" anvil:dom-node="month"></b>
+              <anvil-component type="Button" name="next_button" prop:text="Next month" prop:role='["btn", "btn-icon", "ic-arrow"]'></anvil-component>
+            </div>
+            <anvil-component type="Button" name="csv_button" prop:text="Download CSV" prop:role='["btn", "btn-sm", "ic-download"]'></anvil-component>
+          </div>
+          <anvil-component type="RepeatingPanel" name="rules_panel" prop:item_template="Health_Booker.Items.TableRow"></anvil-component>
+          <div anvil:name="pay_table" class="tc-pay">
+            <anvil-component type="RepeatingPanel" name="lines_panel" prop:item_template="Health_Booker.Items.TableRow"></anvil-component>
+          </div>
+          <div class="ui-empty tc-empty" anvil:name="no_pay"><i class="ic ic-wallet"></i><p anvil:dom-node="no_pay_text"></p></div>
+          <p class="ui-hint tc-hint">Students = checked in or booked (no-shows and late cancels don't count). Your studio pays you directly; this statement is what you're owed.</p>
+        </div>
+        <div anvil:name="reviews_part">
+          <anvil-component type="RepeatingPanel" name="reviews_panel" prop:item_template="Health_Booker.Items.ReviewCard" prop:role='["ui-list-panel"]'></anvil-component>
+          <div class="ui-empty" anvil:name="no_reviews"><i class="ic ic-star"></i><h2>No reviews yet</h2><p>Students who come to your classes can leave one.</p></div>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

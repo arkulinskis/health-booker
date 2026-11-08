@@ -50,7 +50,7 @@ def teach_home(start_iso=None, end_iso=None):
                 open_subs.append(d)
     start = C.parse_iso(start_iso) or now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     end = C.parse_iso(end_iso) or start + dt.timedelta(days=31)
-    lines = []
+    lines: list = []
     for st in rows:
         for c in app_tables.classes.search(teacher=st, start=q.between(start, min(end, now))):
             if c["status"] != "scheduled":

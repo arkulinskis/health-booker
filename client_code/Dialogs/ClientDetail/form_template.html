@@ -1,0 +1,10 @@
+<div class="ui hb-dialog">
+  <h2 class="dlg-h" anvil:dom-node="name"></h2>
+  <p class="muted" anvil:dom-node="email"></p>
+  <div class="ui-note" anvil:dom-node="waiver"></div>
+  <h3 class="mg-dlg-h">Passes</h3>
+  <anvil-component type="RepeatingPanel" name="passes_panel" prop:item_template="Health_Booker.Items.Line" prop:role='["ui-list-panel"]'></anvil-component>
+  <h3 class="mg-dlg-h">Visits</h3>
+  <anvil-component type="RepeatingPanel" name="visits_panel" prop:item_template="Health_Booker.Items.TableRow" prop:role='["mg-visits"]'></anvil-component>
+  <div class="ui-row end"><anvil-component type="Button" name="close_button" prop:text="Close" prop:role='["btn", "btn-ghost"]'></anvil-component></div>
+</div>

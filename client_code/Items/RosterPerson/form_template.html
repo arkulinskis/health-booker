@@ -1,0 +1,16 @@
+<div class="hb-person-host">
+  <div class="hb-person" anvil:name="row">
+    <span class="ui-avatar" anvil:dom-node="initials"></span>
+    <div class="hb-person-mid">
+      <div class="name"><span anvil:dom-node="name"></span> <span class="hb-badges" anvil:dom-node="badges"></span></div>
+      <div class="sub" anvil:dom-node="sub"></div>
+      <div class="health" anvil:name="health"><i class="ic ic-heart"></i><span anvil:dom-node="health_text"></span></div>
+    </div>
+    <div class="acts">
+      <anvil-component type="Button" name="in_button" prop:role='["btn", "btn-sm", "ic-check"]'></anvil-component>
+      <anvil-component type="Button" name="noshow_button" prop:text="No-show" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component>
+      <anvil-component type="Button" name="forgive_button" prop:text="Forgive" prop:role='["btn", "btn-sm", "ic-heart"]'></anvil-component>
+      <anvil-component type="Button" name="paid_button" prop:text="Mark paid" prop:role='["btn", "btn-sm", "btn-clay"]'></anvil-component>
+    </div>
+  </div>
+</div>

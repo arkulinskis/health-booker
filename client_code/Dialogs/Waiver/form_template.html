@@ -1,0 +1,19 @@
+<div class="ui hb-dialog">
+  <h2 class="dlg-h">A quick waiver</h2>
+  <p class="muted" anvil:dom-node="lead"></p>
+  <div class="ui-note hb-waiver-text" anvil:dom-node="text" tabindex="0"></div>
+  <div class="hb-dlg-stack">
+    <label class="ui-field"><span>Health notes for your teachers <em>(optional)</em></span>
+      <anvil-component type="TextArea" name="health_box" prop:placeholder="Injuries, pregnancy, anything they should know" prop:height="70"></anvil-component></label>
+    <anvil-component type="CheckBox" name="share_box" prop:text="Show my health notes to my teachers on the class list" prop:checked="true"></anvil-component>
+    <label class="ui-field"><span>Emergency contact <em>(optional)</em></span>
+      <anvil-component type="TextBox" name="emergency_box" prop:placeholder="Name and phone"></anvil-component></label>
+    <label class="ui-field"><span>Type your full name to sign</span>
+      <anvil-component type="TextBox" name="signature_box"></anvil-component></label>
+    <anvil-component type="Label" name="message" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+  </div>
+  <div class="ui-row end">
+    <anvil-component type="Button" name="cancel_button" prop:text="Not now" prop:role='["btn", "btn-ghost"]'></anvil-component>
+    <anvil-component type="Button" name="sign_button" prop:text="Sign and continue" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component>
+  </div>
+</div>

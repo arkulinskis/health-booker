@@ -1,0 +1,8 @@
+<div class="mg-tab">
+  <div class="ui-row mg-intro-row"><p class="muted mg-intro">Numbers are for this month. Teachers see their own classes, class lists, subs and pay in Teach.</p>
+    <anvil-component type="Button" name="invite_button" prop:text="Add someone" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component></div>
+  <anvil-component type="RepeatingPanel" name="team_panel" prop:item_template="Health_Booker.Items.StaffCard" prop:role='["mg-staff"]'></anvil-component>
+  <div class="hb-section"><h2>Sub requests</h2>
+    <anvil-component type="RepeatingPanel" name="subs_panel" prop:item_template="Health_Booker.Items.Line" prop:role='["ui-list-panel"]'></anvil-component>
+    <p class="muted" anvil:name="no_subs">No sub requests yet.</p></div>
+</div>

@@ -1,0 +1,28 @@
+<anvil-form layout="Health_Booker.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap" anvil:name="page">
+      <div class="ui-narrow" anvil:name="none"><div class="ui-empty"><i class="ic ic-door"></i><h2>You don't run a studio yet</h2><p>Open one in two minutes.</p><a class="ui-btn primary" href="#open">Open a studio</a></div></div>
+      <div anvil:name="main">
+        <div class="mg-top">
+          <div><h1 anvil:dom-node="name"></h1><p class="muted mg-role"><span anvil:dom-node="role"></span> <span class="ui-badge warn" anvil:name="status_badge"><span anvil:dom-node="status_text"></span></span></p></div>
+          <div class="mg-links">
+            <anvil-component type="DropDown" name="studio_box"></anvil-component>
+            <a class="ui-btn sm" anvil:name="page_link" href="#discover"><i class="ic ic-external"></i>Studio page</a>
+            <a class="ui-btn sm" anvil:name="kiosk_link" href="#manage"><i class="ic ic-tablet"></i>Check-in kiosk</a>
+          </div>
+        </div>
+        <nav class="ui-tabs" aria-label="Back office">
+          <a href="#manage" anvil:name="tab_today"><i class="ic ic-sun"></i>Today</a>
+          <a href="#manage" anvil:name="tab_schedule"><i class="ic ic-calendar"></i>Schedule</a>
+          <a href="#manage" anvil:name="tab_clients"><i class="ic ic-users"></i>Clients</a>
+          <a href="#manage" anvil:name="tab_pricing"><i class="ic ic-ticket"></i>Pricing</a>
+          <a href="#manage" anvil:name="tab_team"><i class="ic ic-mat"></i>Team</a>
+          <a href="#manage" anvil:name="tab_insights"><i class="ic ic-chart"></i>Insights</a>
+          <a href="#manage" anvil:name="tab_reviews"><i class="ic ic-star"></i>Reviews</a>
+          <a href="#manage" anvil:name="tab_settings"><i class="ic ic-sliders"></i>Settings</a>
+        </nav>
+        <anvil-component type="LinearPanel" name="body_panel"></anvil-component>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

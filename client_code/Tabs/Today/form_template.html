@@ -1,0 +1,23 @@
+<div class="mg-tab">
+  <div class="mg-daynav">
+    <anvil-component type="Button" name="prev_button" prop:text="Previous day" prop:role='["btn", "btn-icon", "ic-back"]'></anvil-component>
+    <b anvil:dom-node="day"></b>
+    <anvil-component type="Button" name="next_button" prop:text="Next day" prop:role='["btn", "btn-icon", "ic-arrow"]'></anvil-component>
+    <anvil-component type="Button" name="today_button" prop:text="Back to today" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component>
+  </div>
+  <div class="hb-kpis">
+    <div class="hb-kpi"><b><span anvil:dom-node="k_visits"></span><span class="small muted mg-of" anvil:dom-node="k_cap"></span></b><span anvil:dom-node="k_fill"></span></div>
+    <div class="hb-kpi"><b anvil:dom-node="k_first"></b><span>first-timers</span><small>A leaf marks them on the class list. Say hi!</small></div>
+    <div class="hb-kpi"><b anvil:dom-node="k_sold"></b><span anvil:dom-node="k_sold_n"></span></div>
+    <div class="hb-kpi"><b anvil:dom-node="k_unpaid"></b><span>passes to collect at the desk</span></div>
+  </div>
+  <div class="mg-hint" anvil:name="subs_hint"><i class="ic ic-swap"></i><div><b anvil:dom-node="subs_title"></b> <span class="muted" anvil:dom-node="subs_text"></span></div></div>
+  <div class="hb-section"><h2>Classes</h2>
+    <anvil-component type="RepeatingPanel" name="classes_panel" prop:item_template="Health_Booker.Items.MgClass" prop:role='["mg-tl"]'></anvil-component>
+    <div class="ui-empty" anvil:name="no_classes"><i class="ic ic-calendar"></i><h3>No classes this day</h3><p>Add some in the Schedule tab.</p></div>
+  </div>
+  <div class="hb-section"><h2>To collect at the desk</h2>
+    <anvil-component type="RepeatingPanel" name="unpaid_panel" prop:item_template="Health_Booker.Items.Line" prop:role='["ui-list-panel"]'></anvil-component>
+    <p class="muted" anvil:name="all_paid">Nothing to collect. Every pass is paid.</p>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="mg-tab">
+  <div class="mg-daynav">
+    <anvil-component type="Button" name="prev_button" prop:text="Previous week" prop:role='["btn", "btn-icon", "ic-back"]'></anvil-component>
+    <b anvil:dom-node="range"></b>
+    <anvil-component type="Button" name="next_button" prop:text="Next week" prop:role='["btn", "btn-icon", "ic-arrow"]'></anvil-component>
+    <span class="ui-spacer"></span>
+    <anvil-component type="Button" name="new_button" prop:text="New class" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component>
+  </div>
+  <div class="ui-note mg-setup" anvil:name="setup_note">Add a teacher (Team) and a room (Settings) first.</div>
+  <anvil-component type="RepeatingPanel" name="week_panel" prop:item_template="Health_Booker.Items.WeekCol" prop:role='["mg-week"]'></anvil-component>
+</div>

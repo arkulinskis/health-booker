@@ -1,0 +1,21 @@
+<anvil-form layout="Health_Booker.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ui-narrow" anvil:name="bad"><div class="ui-empty"><i class="ic ic-gift"></i><h2>That friend pass doesn't exist</h2><p>Check the link, or ask your friend to send it again.</p><a class="ui-btn primary" href="#discover">Find a class</a></div></div>
+      <div class="gf-card" anvil:name="card">
+        <div class="gf-ic"><i class="ic ic-gift"></i></div>
+        <h1 anvil:dom-node="title"></h1>
+        <p class="muted gf-rel" anvil:dom-node="from"></p>
+        <div class="gf-rel gf-act">
+          <a class="ui-btn primary lg" anvil:name="book_link" href="#discover">Book your free class</a>
+          <p class="muted" anvil:name="used">This friend pass has already been used.</p>
+          <div anvil:name="mine"><p class="muted">This is your friend pass. Send this page's link to a friend!</p>
+            <anvil-component type="Button" name="copy_button" prop:text="Copy link" prop:role='["btn", "ic-copy"]'></anvil-component></div>
+          <anvil-component type="Button" name="claim_button" prop:text="Claim my free class" prop:role='["btn", "btn-primary", "btn-lg", "ic-gift"]'></anvil-component>
+          <anvil-component type="Button" name="join_button" prop:text="Join free to claim it" prop:role='["btn", "btn-primary", "btn-lg"]'></anvil-component>
+        </div>
+        <p class="small muted gf-rel gf-fine" anvil:dom-node="fine"></p>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>
