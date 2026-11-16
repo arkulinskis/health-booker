@@ -67,7 +67,7 @@ free data export**. Built on [Anvil](https://anvil.works).
 - **Open a studio** (`#open`): one-page form with live preview; creates the studio (in review), a room, the owner
   as staff and four starter passes.
 
-**For admins** (`#admin`; arkulinskis@gmail.com becomes an admin on first sign-in):
+**For admins** (`#admin`; your admin email (App Secret `admin_emails`) becomes an admin on first sign-in):
 - **Overview** (people, live studios, studios in review, classes next 7 days, bookings this week), **Studios**
   (publish / pause / feature, link to manage), **Feedback inbox**, **Users**, **Demo data**.
 
@@ -81,7 +81,7 @@ with a waitlist. All fictional; removable in Admin → Demo data.
 1. In the Anvil editor: **Create app → Clone from GitHub**, and paste `https://github.com/arkulinskis/health-booker`.
 2. **Users** service: email + password and "Continue with Google", sign-up allowed (already set in `anvil.yaml`; check it).
 3. Open the app in the editor. If it shows a **Schema Mismatch** alert, choose **"The schema of the source code is correct"** so Anvil creates the tables.
-4. **Run** it and sign up with **arkulinskis@gmail.com** straight away (that account becomes the admin).
+4. **Run** it and sign up with **your admin email** (App Secret `admin_emails`) straight away (that account becomes the admin).
 5. **Publish** (Publish → public URL, or your own domain).
 
 <!-- libraries:start -->
