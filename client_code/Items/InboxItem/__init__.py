@@ -3,7 +3,7 @@ from anvil import *
 from ._anvil_designer import InboxItemTemplate
 from ... import hb, state
 
-ICON = {"waitlist": "clock", "cancelled": "x", "sub": "swap", "nudge": "chat", "reply": "star", "forgiven": "heart",
+ICON = {"waitlist": "clock", "cancelled": "x", "sub": "swap", "nudge": "chat", "reply": "star", "forgiven": "heart", "kindness": "heart",
         "friend": "gift", "team": "users", "studio": "door", "pause": "calendar"}
 
 

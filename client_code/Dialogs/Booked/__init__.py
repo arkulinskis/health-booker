@@ -7,7 +7,7 @@ from ... import hb, router
 
 class Booked(BookedTemplate):
     """The confirmation after booking: a breathing circle (or the waitlist place) and the facts, with
-    Add to calendar and My practice."""
+    Add to calendar, Invite a friend (practise together) and My practice."""
 
     def __init__(self, booking=None, **properties):
         super().__init__(**properties)
@@ -16,6 +16,7 @@ class Booked(BookedTemplate):
         s: dict = c.get("studio") or {}
         d = self.dom_nodes
         self.c = c
+        self.b = b
         wait = b.get("status") == "waitlist"
         hb.set_acc(self.box, s.get("accent"))
         self.wait_part.visible = wait
@@ -51,6 +52,10 @@ class Booked(BookedTemplate):
     @handle("ics_button", "click")
     def ics_button_click(self, **event_args):
         hb.ics(self.c)
+
+    @handle("invite_button", "click")
+    def invite_button_click(self, **event_args):
+        hb.invite(self.b)
 
     @handle("practice_button", "click")
     def practice_button_click(self, **event_args):

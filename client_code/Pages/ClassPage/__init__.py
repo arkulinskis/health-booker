@@ -6,6 +6,12 @@ from ._anvil_designer import ClassPageTemplate
 from ... import hb, router, state
 
 
+LATE_TEXT = {"": "You cancelled inside the window. Something came up? Ask the studio: they can forgive it.",
+             "ask": "You cancelled inside the window and asked the studio to forgive it. They'll answer in your inbox.",
+             "forgiven": "The studio forgave this one: your credit is back.",
+             "kept": "The studio kept the credit for this one."}
+
+
 class ClassPage(ClassPageTemplate):
     """#class/<id>[/solo]: one class. Details, the teacher (follow, reviews), the room with pick-a-mat, which pass to
     use, then book / join the waitlist / cancel; after class, the reflection + review. Staff also get the class list.
@@ -15,6 +21,7 @@ class ClassPage(ClassPageTemplate):
         super().__init__(**properties)
         self.id = args[0] if args else ""
         self.solo = len(args) > 1 and args[1] == "solo"
+        self.invite = args[2] if len(args) > 2 and args[1] == "with" else None
         if self.solo:
             hb.loose(window.document.documentElement).classList.add("hb-solo")
         self.spot = None
@@ -22,7 +29,7 @@ class ClassPage(ClassPageTemplate):
         self.load()
 
     def load(self):
-        r = anvil.server.call("get_class", self.id)
+        r = anvil.server.call("get_class", self.id, self.invite)
         ok = bool(r) and r.get("ok") is not False
         self.not_found.visible = not ok
         self.main.visible = ok
@@ -101,6 +108,7 @@ class ClassPage(ClassPageTemplate):
             self.reflect_button.visible = past
             self.reflect_button.text = "Edit your reflection" if b.get("mood") else "How do you feel?"
             self.booked_actions.visible = not past
+            self.invite_button.visible = not past
             if d.get("room") and not past:
                 self.mats.visible = True
                 self.mats.draw(d["room"], d.get("taken"), b.get("spot"), None, nokey=True)
@@ -111,12 +119,16 @@ class ClassPage(ClassPageTemplate):
             return
         if b and b["status"] == "late":
             self.late_box.visible = True
+            asked = b.get("kindness") or ""
+            self.ask_button.visible = not asked
+            hb.text(dn["late_text"], LATE_TEXT.get(asked, LATE_TEXT[""]))
             return
         if d.get("past"):
             self.past_box.visible = True
             return
         self.book_box.visible = True
         full = (c.get("left") or 0) <= 0
+        self.draw_with(full)
         ws = c.get("kind") == "workshop"
         hb.text(dn["book_title"], ("Workshop · " + hb.money(c.get("price"))) if ws else "Class is full" if full else "Book your mat")
         left, low = hb.spots(c)
@@ -141,6 +153,37 @@ class ClassPage(ClassPageTemplate):
             "Book mat " + self.spot if self.spot else "Book")
         self.book_button.role = ["btn", "btn-lg", "btn-block", "ic-clock"] if full else ["btn", "btn-primary", "btn-lg", "btn-block", "ic-check"]
         hb.text(dn["free_note"], "Free cancellation until %s hours before class." % s.get("cancel_hours"))
+
+    def draw_with(self, full):
+        """Practise together: someone's invite link (#class/<id>/with/<code>) names them and offers the mats next to theirs."""
+        w = self.d.get("with")
+        self.with_box.visible = bool(w)
+        if not w:
+            return
+        dn = self.dom_nodes
+        name = w.get("name") or "Your friend"
+        hb.text(dn["with_initials"], state.initials(name))
+        near = [] if full else (w.get("near") or [])
+        if w.get("waiting"):
+            title, text = "%s is on the waitlist" % name, "Join them: people are moved in oldest first when mats free up."
+        elif w.get("spot"):
+            title = "%s is going, on mat %s" % (name, w["spot"])
+            text = ("Pick a mat next to theirs:" if near else
+                    "The class is full: join the waitlist and you'll be moved in when a mat frees up." if full else
+                    "The mats right next to theirs are taken, but any free mat works.")
+        else:
+            title, text = "%s is going" % name, "Book any mat and say hi before class."
+        hb.text(dn["with_title"], title)
+        hb.text(dn["with_text"], text)
+        self.near_panel.visible = bool(near)
+        self.near_panel.items = [{"group": "near", "key": x, "label": "Mat " + x, "icon": "mat", "on": x == self.spot, "host": self}
+                                 for x in near]
+
+    def chip(self, group, key):
+        self.pick_spot(key)
+
+    def chip_panel_for(self, group):
+        return self.near_panel
 
     # ---- choices
     def pick_spot(self, spot):
@@ -178,6 +221,15 @@ class ClassPage(ClassPageTemplate):
     @handle("leave_button", "click")
     def leave_button_click(self, **event_args):
         if hb.cancel(self._booking()):
+            self.load()
+
+    @handle("invite_button", "click")
+    def invite_button_click(self, **event_args):
+        hb.invite(self._booking())
+
+    @handle("ask_button", "click")
+    def ask_button_click(self, **event_args):
+        if hb.ask_kindness(self._booking()):
             self.load()
 
     @handle("ics_button", "click")

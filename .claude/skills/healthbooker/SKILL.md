@@ -153,3 +153,4 @@ Sign-up keeps the tick box (`legal.consent_field()` in Pages/Auth). Feedback = P
 - Client and server modules share ONE Python package: a server module can't have the same name as a client
   package or module (server `Items.py` + client `Items/` = "Cannot resolve imported module"). The template's example
   server module is `ExampleItems.py` for that reason.
+- **Optional schema (2026-11-20):** `studios.refill_free` and table `kindness` are read through `Model.flag` / `Model.kindness_table()` / `kindness_rows()` so the live app keeps working before the Schema Mismatch is accepted. Keep new columns behind those guards.

@@ -30,6 +30,7 @@ class Settings(SettingsTemplate):
         self.amen_box.text = ", ".join(s.get("amenities") or [])
         self.lang_box.text = ", ".join(s.get("languages") or [])
         self.cancel_box.text = str(s.get("cancel_hours"))
+        self.refill_box.checked = s.get("refill_free", True) is not False
         self.waiver_box.text = s.get("waiver_text") or ""
         self.styles = set(s.get("styles") or [])
         self.accent = s.get("accent") or "sage"
@@ -70,7 +71,7 @@ class Settings(SettingsTemplate):
         v = {"name": self.name_box.text or "", "tagline": self.tagline_box.text or "", "neighbourhood": self.hood_box.text or "",
              "city": self.city_box.text or "", "address": self.address_box.text or "", "about": self.about_box.text or "",
              "styles": [x for x in self.d["styles"] if x in self.styles], "amenities": split(self.amen_box.text),
-             "languages": split(self.lang_box.text), "cancel_hours": hours, "accent": self.accent, "waiver_text": self.waiver_box.text or ""}
+             "languages": split(self.lang_box.text), "cancel_hours": hours, "refill_free": bool(self.refill_box.checked), "accent": self.accent, "waiver_text": self.waiver_box.text or ""}
         if state.call("save_studio", self.slug, v):
             state.toast("Saved.", "ok")
 

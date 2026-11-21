@@ -108,8 +108,38 @@ def _review(r):
             "hidden": bool(r["hidden"])}
 
 
+def _with_friend(c, invite, me, taken):
+    """Practise together: the booking behind an invite code -> the friend's first name, their mat and the free mats
+    next to it. First name only, never an email; None for a wrong code or the inviter's own link."""
+    if not isinstance(invite, str) or not invite or len(invite) > 16:
+        return None
+    from . import Booking
+    salt = Booking.invite_salt()
+    for b in app_tables.bookings.search(klass=c):
+        if b["status"] not in ("booked", "checked_in", "waitlist") or b["user"] is None:
+            continue
+        if Booking.invite_code(b, salt) != invite:
+            continue
+        if me is not None and b["user"] == me:
+            return None
+        spot = b["spot"] or ""
+        near = []
+        room = c["room"]
+        if spot and room is not None and b["status"] != "waitlist":
+            row, col = spot[0].upper(), int(spot[1:]) if spot[1:].isdigit() else 0
+            blocked = set(room["blocked"] or [])
+            options = ["%s%d" % (row, col - 1), "%s%d" % (row, col + 1),
+                       "%s%d" % (chr(ord(row) - 1), col), "%s%d" % (chr(ord(row) + 1), col)]
+            for x in options:
+                if Booking._spot_in_room(x, room) and x not in blocked and x not in taken and x not in near:
+                    near.append(x)
+        return {"name": C.first_name(b["user"]), "spot": spot if b["status"] != "waitlist" else "",
+                "waiting": b["status"] == "waitlist", "near": near[:4]}
+    return None
+
+
 @anvil.server.callable
-def get_class(class_id):
+def get_class(class_id, invite=None):
     me = C.me()
     c = C.row_by_id(app_tables.classes, class_id)
     if c is None or not Mo.visible(c["studio"], me):
@@ -134,12 +164,17 @@ def get_class(class_id):
     visited = bool(me and Mo.has_visited(me, s))
     products = Mo.shop(me, s)
     following = _follows(me)
+    booking = Mo.booking_dict(mine, d) if mine else None
+    if booking and mine["status"] == "late":
+        asks = Mo.kindness_rows(booking=mine)
+        booking["kindness"] = asks[0]["status"] if asks else ""
     return {"class": d, "teacher": teacher, "reviews": [_review(r) for r in reviews[:4]],
             "room": {"id": room.get_id(), "name": room["name"], "rows": room["rows"], "cols": room["cols"],
                      "blocked": room["blocked"] or []} if room else None,
-            "taken": taken, "booking": Mo.booking_dict(mine, d) if mine else None, "passes": passes,
+            "taken": taken, "booking": booking, "passes": passes,
             "products": products, "waiver": bool(me and C.waiver(s, me)),
             "waiver_text": s["waiver_text"] or DEFAULT_WAIVER, "visited": visited, "follows": following,
+            "with": _with_friend(c, invite, me, taken),
             "is_staff": Mo.is_staff(s, me), "past": C.aware(c["start"]) + dt.timedelta(minutes=c["minutes"] or 60) < C.now()}
 
 

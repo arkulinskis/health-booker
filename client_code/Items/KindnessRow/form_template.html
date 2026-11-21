@@ -1,0 +1,15 @@
+<div class="ui-item hb-kind">
+  <div class="hb-kind-top">
+    <span class="ui-avatar" anvil:dom-node="initials"></span>
+    <div class="grow"><b anvil:dom-node="title"></b><p class="small muted" anvil:dom-node="sub"></p></div>
+    <span class="ui-badge warn" anvil:dom-node="reason"></span>
+  </div>
+  <p class="hb-kind-note" anvil:dom-node="note"></p>
+  <div class="hb-kind-acts">
+    <anvil-component type="TextBox" name="reply_box" prop:placeholder="Optional note back (they see it)"></anvil-component>
+    <div class="ui-row">
+      <anvil-component type="Button" name="keep_button" prop:text="Keep it" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component>
+      <anvil-component type="Button" name="forgive_button" prop:text="Forgive" prop:role='["btn", "btn-sm", "btn-primary", "ic-heart"]'></anvil-component>
+    </div>
+  </div>
+</div>

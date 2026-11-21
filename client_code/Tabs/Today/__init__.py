@@ -6,7 +6,7 @@ from ... import hb, state
 
 class Today(TodayTemplate):
     """Back office > Today: one day's classes (fill, check-ins, the class list), sales, first-timers, open subs and
-    passes to collect at the desk. Server: manage_day, restore_class (+ roster and mark-paid dialogs)."""
+    passes to collect at the desk, kindness requests. Server: manage_day, restore_class, kindness_decide (+ roster and mark-paid dialogs)."""
 
     def __init__(self, slug="", studio=None, **properties):
         super().__init__(**properties)
@@ -38,6 +38,9 @@ class Today(TodayTemplate):
         hb.text(dn["subs_title"], hb.plural(len(subs), "class needs", "classes need") + " a sub.")
         hb.text(dn["subs_text"], " · ".join("%s (%s, %s)" % (x["class"]["title"], hb.date(x["class"]["start"]), x["from"]) for x in subs if x.get("class")) +
                 ". Your teachers see it in Teach; or change the teacher in Schedule.")
+        asks = d.get("kindness") or []
+        self.kind_part.visible = bool(asks)
+        self.kind_panel.items = [{"k": k, "host": self} for k in asks]
         self.classes_panel.items = [{"c": c, "host": self} for c in d["classes"]]
         self.no_classes.visible = not d["classes"]
         self.unpaid_panel.items = [{"title": p["who"], "who": p["who"], "sub": "%s · got it %s" % (p["name"], hb.ago(p.get("created"))),
@@ -47,6 +50,13 @@ class Today(TodayTemplate):
 
     def _paid(self, item):
         if hb.mark_paid(item["id"]):
+            self.load()
+
+    def kindness(self, k, forgive, reply):
+        r = state.call("kindness_decide", k["id"], forgive, reply)
+        if r:
+            state.toast("Forgiven. %s gets the credit back." % hb.first_name(k.get("who")) if forgive
+                        else "Kept. %s has been told kindly." % hb.first_name(k.get("who")), "ok")
             self.load()
 
     def roster(self, class_id):

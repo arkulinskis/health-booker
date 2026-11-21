@@ -307,6 +307,9 @@ def cancel(b):
         title = "Late cancel?"
         body = ("It's less than %s hours before class, so this class still counts against your pass. The studio may "
                 "forgive it." % hrs)
+        if c.get("waiting") and (c.get("studio") or {}).get("refill_free", True):
+            body = ("It's less than %s hours before class, but %s waiting. If they take your mat, your credit comes "
+                    "straight back: the studio loses nothing, so you don't either." % (hrs, plural(c["waiting"], "person is", "people are")))
         ok, keep = "Cancel anyway", "Keep it"
     else:
         title = "Cancel this class?"
@@ -320,8 +323,33 @@ def cancel(b):
         return False
     res = r.get("result")
     state.toast("Cancelled (late). Your mat goes to the next person waiting." if res == "late"
+                else "Your mat went to someone on the waitlist, so your credit is back." if res == "refilled"
                 else "You left the waitlist." if res == "left_waitlist" else "Cancelled. Your credit is back.", "ok")
     return True
+
+
+def ask_kindness(b):
+    """Late cancel / no-show: ask the studio to forgive it (Dialogs/AskKindness). True when the request was sent."""
+    from .Dialogs.AskKindness import AskKindness
+    return bool(_dialog(AskKindness(booking=b)))
+
+
+def invite(b):
+    """Practise together: copy (or share, on phones) a link that shows a friend this class and the mats next to yours."""
+    r = state.call("invite_link", b["id"])
+    if not r:
+        return
+    url = link(r["path"])
+    c = b.get("class") or {}
+    text = "I'm going to %s on %s. Come practise with me!" % (c.get("title") or "yoga", when(c["start"]) if c.get("start") else "")
+    nav = loose(window.navigator)
+    if getattr(nav, "share", None) and window.matchMedia("(pointer: coarse)").matches:
+        try:
+            nav.share({"title": c.get("title") or "Health Booker", "text": text, "url": url})
+            return
+        except Exception:
+            pass
+    copy(text + " " + url, "Invite link copied. Send it to a friend.")
 
 
 def reflect(b):

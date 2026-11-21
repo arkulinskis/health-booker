@@ -756,6 +756,18 @@ html.hb-solo .ui-shell.signed-in .ui-footer { padding-bottom: 0 !important; }
 .cl-status.wait { background: var(--c-warn-soft); }
 .cl-status.late { background: var(--c-bad-soft); }
 .cl-status h3 { display: flex; gap: 8px; align-items: center; }
+/* practise together: a friend's invite on the class page */
+.cl-with { display: flex; gap: 12px; align-items: flex-start; padding: 14px; border-radius: var(--radius); background: var(--acc-soft, var(--c-brand-soft)); }
+.cl-with .grow { flex: 1; min-width: 0; }
+.cl-with p { margin: 2px 0 8px; }
+.cl-with .ui-avatar { flex: none; }
+/* kindness requests on the Today board */
+.hb-kind { flex-direction: column; gap: 10px; align-items: stretch; }
+.hb-kind-top { display: flex; gap: 12px; align-items: flex-start; }
+.hb-kind-top .grow { flex: 1; min-width: 0; }
+.hb-kind-note { margin: 0; padding-left: 12px; border-left: 3px solid var(--c-line); color: var(--c-ink); font-style: italic; }
+.hb-kind-acts { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.hb-kind-acts > :first-child { flex: 1 1 220px; min-width: 0; }
 .cl-teacher { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
 .cl-teacher .ui-avatar { width: 56px; height: 56px; font-size: 1.05rem; background: var(--acc-soft); color: var(--acc); }
 .cl-cancelled { background: var(--c-bad-soft); color: var(--c-bad); border-radius: var(--radius); padding: 14px 16px; font-weight: 600; }

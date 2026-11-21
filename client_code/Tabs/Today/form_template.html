@@ -12,6 +12,10 @@
     <div class="hb-kpi"><b anvil:dom-node="k_unpaid"></b><span>passes to collect at the desk</span></div>
   </div>
   <div class="mg-hint" anvil:name="subs_hint"><i class="ic ic-swap"></i><div><b anvil:dom-node="subs_title"></b> <span class="muted" anvil:dom-node="subs_text"></span></div></div>
+  <div class="hb-section" anvil:name="kind_part"><h2><i class="ic ic-heart"></i> Kindness requests</h2>
+    <p class="muted small">Students asking you to forgive a late cancel or no-show. Forgive gives the credit back; either way they hear from you in their inbox.</p>
+    <anvil-component type="RepeatingPanel" name="kind_panel" prop:item_template="Health_Booker.Items.KindnessRow" prop:role='["ui-list-panel"]'></anvil-component>
+  </div>
   <div class="hb-section"><h2>Classes</h2>
     <anvil-component type="RepeatingPanel" name="classes_panel" prop:item_template="Health_Booker.Items.MgClass" prop:role='["mg-tl"]'></anvil-component>
     <div class="ui-empty" anvil:name="no_classes"><i class="ic ic-calendar"></i><h3>No classes this day</h3><p>Add some in the Schedule tab.</p></div>

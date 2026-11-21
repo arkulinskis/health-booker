@@ -101,7 +101,7 @@ def class_dict(c, staff=None, studios=None, rooms=None):
             "room": {"id": r.get_id(), "name": r["name"]} if r else None,
             "studio": {"slug": s["slug"], "name": s["name"], "accent": s["accent"] or "sage",
                        "neighbourhood": s["neighbourhood"] or "", "address": s["address"] or "",
-                       "cancel_hours": cancel_hours(s)} if s else None}
+                       "cancel_hours": cancel_hours(s), "refill_free": refill_free(s)} if s else None}
 
 
 def _cached(row, cache):
@@ -110,6 +110,40 @@ def _cached(row, cache):
     if cache is not None:
         return cache.get(row.get_id(), row)
     return row
+
+
+def flag(row, name, default=None):
+    """A column that may not exist yet on the live database (before the user accepts the Schema Mismatch)."""
+    if row is None:
+        return default
+    try:
+        v = row[name]
+    except Exception:
+        return default
+    return default if v is None else v
+
+
+def refill_free(studio):
+    """Late cancels are free when someone from the waitlist takes the mat (studio setting, on unless switched off)."""
+    return bool(flag(studio, "refill_free", True))
+
+
+def kindness_table():
+    """The kindness-requests table, or None while the live database doesn't have it yet."""
+    try:
+        return app_tables.kindness
+    except Exception:
+        return None
+
+
+def kindness_rows(**kw):
+    t = kindness_table()
+    if t is None:
+        return []
+    try:
+        return list(t.search(**kw))
+    except Exception:
+        return []
 
 
 def cancel_hours(studio):

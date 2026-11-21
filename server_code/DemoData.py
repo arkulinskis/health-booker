@@ -291,6 +291,7 @@ def load():
         _make_classes(st, first, today + dt.timedelta(days=AHEAD), rng, ctx["members"].get(slug, []))
     C.set_setting("demo_through", (today + dt.timedelta(days=AHEAD)).isoformat())
     _extras(ctx, rng, now)
+    _kindness(ctx, now)
     for st in ctx["studios"].values():
         _rating(st["row"])
     C.set_setting("demo", "loaded")
@@ -645,8 +646,28 @@ def sample_member(user):
              "Hi! Inès is running a Yoga Nidra workshop soon, and we thought of you. - Maya", "#studio/sage-and-stone")
 
 
+def _kindness(ctx, now):
+    """One open "ask for kindness" request on Sage & Stone's Today board (a recent no-show or late cancel)."""
+    t = Mo.kindness_table()
+    st = ctx["studios"].get("sage-and-stone")
+    if t is None or st is None:
+        return
+    s = st["row"]
+    recent = [b for b in app_tables.bookings.search(studio=s, status="late")
+              if b["user"] is not None and now - dt.timedelta(days=6) < C.aware(b["start"]) < now]
+    recent.sort(key=lambda b: C.aware(b["start"]), reverse=True)
+    if recent:
+        b = recent[0]
+        t.add_row(booking=b, user=b["user"], studio=s, reason="Sick", status="ask", reply="", decided=None,
+                  note="Woke up with a fever and didn't want to bring it to class. Sorry for the late notice!",
+                  created=C.aware(b["start"]) - dt.timedelta(hours=2), is_demo=True)
+
+
 def remove(remember=True):
     """Delete the demo: demo studios with everything at them (real people's bookings there too), then demo people."""
+    for r in Mo.kindness_rows():  # before the bookings they point at
+        if r["is_demo"] or (r["studio"] is not None and r["studio"]["is_demo"]) or (r["user"] is not None and r["user"]["is_demo"]):
+            r.delete()
     for s in app_tables.studios.search(is_demo=True):
         for name in STUDIO_TABLES:
             for r in getattr(app_tables, name).search(studio=s):

@@ -1,36 +1,5 @@
 allow_embedding: false
 db_schema:
-  error_log:
-    client: none
-    columns:
-    - admin_ui: {order: 0, width: 200}
-      name: when
-      type: datetime
-    - admin_ui: {order: 1, width: 120}
-      name: source
-      type: string
-    - admin_ui: {order: 2, width: 160}
-      name: kind
-      type: string
-    - admin_ui: {order: 3, width: 300}
-      name: message
-      type: string
-    - admin_ui: {order: 4, width: 300}
-      name: traceback
-      type: string
-    - admin_ui: {order: 5, width: 200}
-      name: page
-      type: string
-    - admin_ui: {order: 6, width: 120}
-      name: session
-      type: string
-    - admin_ui: {order: 7, width: 200}
-      name: user
-      target: users
-      type: link_single
-    indexes: []
-    server: full
-    title: Error log
   app_settings:
     client: none
     columns:
@@ -267,6 +236,53 @@ db_schema:
     indexes: []
     server: full
     title: Classes
+  error_log:
+    client: none
+    columns:
+    - admin_ui:
+        order: 0
+        width: 200
+      name: when
+      type: datetime
+    - admin_ui:
+        order: 1
+        width: 120
+      name: source
+      type: string
+    - admin_ui:
+        order: 2
+        width: 160
+      name: kind
+      type: string
+    - admin_ui:
+        order: 3
+        width: 300
+      name: message
+      type: string
+    - admin_ui:
+        order: 4
+        width: 300
+      name: traceback
+      type: string
+    - admin_ui:
+        order: 5
+        width: 200
+      name: page
+      type: string
+    - admin_ui:
+        order: 6
+        width: 120
+      name: session
+      type: string
+    - admin_ui:
+        order: 7
+        width: 200
+      name: user
+      target: users
+      type: link_single
+    indexes: []
+    server: full
+    title: Error log
   feedback:
     client: none
     columns:
@@ -397,6 +413,65 @@ db_schema:
     indexes: []
     server: full
     title: Friend passes
+  kindness:
+    client: none
+    columns:
+    - admin_ui:
+        order: 0
+        width: 200
+      name: booking
+      target: bookings
+      type: link_single
+    - admin_ui:
+        order: 1
+        width: 200
+      name: user
+      target: users
+      type: link_single
+    - admin_ui:
+        order: 2
+        width: 200
+      name: studio
+      target: studios
+      type: link_single
+    - admin_ui:
+        order: 3
+        width: 200
+      name: reason
+      type: string
+    - admin_ui:
+        order: 4
+        width: 200
+      name: note
+      type: string
+    - admin_ui:
+        order: 5
+        width: 200
+      name: status
+      type: string
+    - admin_ui:
+        order: 6
+        width: 200
+      name: reply
+      type: string
+    - admin_ui:
+        order: 7
+        width: 200
+      name: created
+      type: datetime
+    - admin_ui:
+        order: 8
+        width: 200
+      name: decided
+      type: datetime
+    - admin_ui:
+        order: 9
+        width: 200
+      name: is_demo
+      type: bool
+    indexes: []
+    server: full
+    title: Kindness
   notices:
     client: none
     columns:
@@ -891,6 +966,11 @@ db_schema:
         width: 200
       name: is_demo
       type: bool
+    - admin_ui:
+        order: 20
+        width: 200
+      name: refill_free
+      type: bool
     indexes: []
     server: full
     title: Studios
@@ -1088,9 +1168,10 @@ db_schema:
     server: full
     title: Waivers
 metadata:
-  description: "Find and book yoga classes across Montréal studios with one account. Studios get scheduling, passes, teacher subs and pay, with no commission and no contract."
-  logo_img: "asset:icon-512.png"
-  title: "Health Booker: book yoga classes across Montréal studios"
+  description: Find and book yoga classes across Montréal studios with one account. Studios get scheduling, passes, teacher
+    subs and pay, with no commission and no contract.
+  logo_img: asset:icon-512.png
+  title: 'Health Booker: book yoga classes across Montréal studios'
 name: Health Booker
 native_deps:
   head_html: |
@@ -1152,7 +1233,7 @@ native_deps:
     <!-- Prepsto feedback panel: every "Submit feedback" link and button opens it (it is the only feedback channel). No floating button, no cookies, nothing loads until it is opened. Codes: APP_MAKER/prepsto-links.json -->
     <script src="https://prepsto.com/_/theme/widget.js" data-prepsto="4vzaa4r" data-button="false" data-label="Submit feedback" async></script>
     <link rel="stylesheet" href="_/theme/icons.css?v=efe79bf8f4">
-    <link rel="stylesheet" href="_/theme/app.css?v=2af5d99c19">
+    <link rel="stylesheet" href="_/theme/app.css?v=3ba559287c">
     <script src="_/theme/app-kit.js?v=885d91650c"></script>
     <script src="_/theme/hb-draw.js?v=489bd6e826"></script>
 package_name: Health_Booker

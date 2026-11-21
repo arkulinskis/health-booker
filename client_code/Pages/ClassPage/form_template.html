@@ -40,15 +40,24 @@
                 <anvil-component type="Button" name="ics_button" prop:text="Calendar" prop:role='["btn", "ic-download"]'></anvil-component>
                 <anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-danger", "ic-x"]'></anvil-component>
               </div>
+              <anvil-component type="Button" name="invite_button" prop:text="Invite a friend to the mat next to you" prop:role='["btn", "btn-block", "ic-share"]'></anvil-component>
             </div>
             <div anvil:name="wait_box" class="cl-stack">
               <div class="cl-status wait"><h3><i class="ic ic-clock"></i><span anvil:dom-node="wait_title"></span></h3>
                 <p class="small">We'll move you in automatically if a mat opens up, and message you. If that happens inside the cancel window, you can still cancel for free.</p></div>
               <anvil-component type="Button" name="leave_button" prop:text="Leave the waitlist" prop:role='["btn", "btn-danger", "ic-x"]'></anvil-component>
             </div>
-            <div class="cl-status late" anvil:name="late_box"><h3>Late cancel</h3><p class="small">You cancelled inside the window. Talk to the studio if something came up: they can forgive it.</p></div>
+            <div class="cl-stack" anvil:name="late_box">
+              <div class="cl-status late"><h3>Late cancel</h3><p class="small" anvil:dom-node="late_text">You cancelled inside the window. Something came up? Ask the studio: they can forgive it.</p></div>
+              <anvil-component type="Button" name="ask_button" prop:text="Ask to forgive" prop:role='["btn", "btn-block", "ic-heart"]'></anvil-component>
+            </div>
             <div class="ui-note" anvil:name="past_box">This class has finished.</div>
             <div anvil:name="book_box" class="cl-stack">
+              <div class="cl-with" anvil:name="with_box">
+                <span class="ui-avatar" anvil:dom-node="with_initials"></span>
+                <div class="grow"><b anvil:dom-node="with_title"></b><p class="small muted" anvil:dom-node="with_text"></p>
+                  <anvil-component type="RepeatingPanel" name="near_panel" prop:item_template="Health_Booker.Items.Chip" prop:role='["hb-chips"]'></anvil-component></div>
+              </div>
               <div class="ui-row between"><h3 anvil:dom-node="book_title"></h3><span class="hb-left" anvil:dom-node="left"></span></div>
               <p class="small muted" anvil:name="pick_hint">Tap a mat to pick your spot, or leave it and take any free mat.</p>
               <anvil-component type="RepeatingPanel" name="passes_panel" prop:item_template="Health_Booker.Items.PassChoice" prop:role='["cl-pass"]'></anvil-component>

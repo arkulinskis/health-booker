@@ -84,7 +84,8 @@ def manage_day(slug, start_iso=None, end_iso=None):
     sold = [p for p in app_tables.passes.search(studio=s, created=q.between(start, end))]
     unpaid = [p for p in app_tables.passes.search(studio=s, paid=False) if p["kind"] != "friend"]
     subs = [x for x in app_tables.subs.search(studio=s, status="open") if x["klass"] and C.aware(x["klass"]["start"]) > C.now()]
-    return {"studio": _studio_full(s), "classes": out,
+    asks = sorted([r for r in Mo.kindness_rows(studio=s, status="ask")], key=lambda r: C.aware(r["created"]))
+    return {"studio": _studio_full(s), "classes": out, "kindness": [_kindness_dict(r) for r in asks[:30]],
             "sold": {"count": len(sold), "total": sum(p["price"] or 0 for p in sold)},
             "unpaid": [_pass_row(p) for p in sorted(unpaid, key=lambda p: C.aware(p["created"]), reverse=True)[:30]],
             "open_subs": [_sub(x, staff) for x in subs],
@@ -95,7 +96,7 @@ def manage_day(slug, start_iso=None, end_iso=None):
 def _studio_full(s):
     d = Mo.studio_card(s)
     from .Studios import DEFAULT_WAIVER
-    d.update(about=s["about"] or "", cancel_hours=Mo.cancel_hours(s), waiver_text=s["waiver_text"] or DEFAULT_WAIVER)
+    d.update(about=s["about"] or "", cancel_hours=Mo.cancel_hours(s), refill_free=Mo.refill_free(s), waiver_text=s["waiver_text"] or DEFAULT_WAIVER)
     return d
 
 
@@ -294,12 +295,55 @@ def forgive(booking_id):
     _class_for(b["klass"].get_id(), me)
     if b["status"] not in ("late", "no_show"):
         return C.fail("Only late cancels and no-shows can be forgiven.")
+    _forgive_row(b)
+    return C.ok()
+
+
+def _forgive_row(b, reply=""):
+    """Give the credit back for a late cancel / no-show, close any open kindness request for it, tell the student."""
     Mo.refund(b["pass_used"])
     b.update(status="cancelled", forgiven=True, updated=C.now())
     Mo.recount(b["klass"])
+    for r in Mo.kindness_rows(booking=b):
+        if r["status"] == "ask":
+            r.update(status="forgiven", reply=reply, decided=C.now())
     C.notify(b["user"], b["studio"], "forgiven", "Your credit is back",
-             "%s gave you back the credit for %s. No worries, life happens." % (b["studio"]["name"], b["klass"]["title"]), "#practice/wallet")
-    return C.ok()
+             "%s gave you back the credit for %s. No worries, life happens." % (b["studio"]["name"], b["klass"]["title"]) +
+             (' "%s"' % reply if reply else ""), "#practice/wallet")
+
+
+def _kindness_dict(r):
+    b = r["booking"]
+    k = b["klass"] if b is not None else None
+    u = r["user"]
+    came = len([x for x in app_tables.bookings.search(user=u, studio=r["studio"]) if x["status"] == "checked_in"]) if u else 0
+    return {"id": r.get_id(), "who": C.name_of(u), "reason": r["reason"] or "Other", "note": r["note"] or "",
+            "created": C.iso(r["created"]), "kind": b["status"] if b is not None else "",
+            "class": k["title"] if k else "", "start": C.iso(k["start"]) if k else None, "visits": came}
+
+
+@anvil.server.callable(require_user=True)
+def kindness_decide(request_id, forgive_it, reply=""):
+    """Answer a kindness request: forgive (credit back) or keep it, with an optional short note to the student."""
+    me = C.require_user()
+    t = Mo.kindness_table()
+    r = C.row_by_id(t, request_id) if t is not None else None
+    if r is None or r["studio"] is None:
+        return C.fail("That request doesn't exist any more.")
+    _studio_for(r["studio"]["slug"], me)
+    if r["status"] != "ask":
+        return C.fail("Someone already answered this one.")
+    reply = C.text(reply, 300, multiline=True)
+    b = r["booking"]
+    if forgive_it and b is not None and b["status"] in ("late", "no_show"):
+        _forgive_row(b, reply)
+        return C.ok(status="forgiven")
+    r.update(status="kept", reply=reply, decided=C.now())
+    k = b["klass"] if b is not None else None
+    C.notify(r["user"], r["studio"], "kindness", "About your request",
+             "%s kept the credit for %s this time." % (r["studio"]["name"], k["title"] if k else "that class") +
+             (' "%s"' % reply if reply else " Thanks for letting them know."), "#practice/wallet")
+    return C.ok(status="kept")
 
 
 @anvil.server.callable(require_user=True)
@@ -736,6 +780,11 @@ def save_studio(slug, data):
              accent=data.get("accent") if data.get("accent") in Mo.ACCENTS else s["accent"],
              cancel_hours=int(C.num(data.get("cancel_hours"), 12, 0, 72)),
              waiver_text=C.text(data.get("waiver_text"), 2000, multiline=True) or s["waiver_text"])
+    if "refill_free" in data:
+        try:  # its own statement: the column may not exist until the Schema Mismatch is accepted
+            s["refill_free"] = bool(data.get("refill_free"))
+        except Exception:
+            pass
     return C.ok(studio=_studio_full(s))
 
 

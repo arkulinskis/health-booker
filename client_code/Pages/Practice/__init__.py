@@ -83,13 +83,25 @@ class Practice(PracticeTemplate):
         self.passes_panel.items = [{"p": p, "host": self} for p in d["passes"]]
         self.no_passes.visible = not d["passes"]
         self.late_part.visible = bool(d["late"])
-        self.late_panel.items = [{"title": b["class"]["title"], "sub": "%s · %s" % ((b["class"].get("studio") or {}).get("name"), hb.date(b["class"]["start"])),
-                                  "badge": "Late cancel" if b["status"] == "late" else "No-show",
-                                  "badge_cls": "warn" if b["status"] == "late" else "bad"} for b in d["late"]]
+        self.late_panel.items = [self._late_item(b) for b in d["late"]]
         self.friends_panel.items = [{"title": f["studio"], "sub": "Created " + hb.ago(f.get("created")),
                                      "badge": "Claimed" if f.get("claimed") else "", "badge_cls": "good",
                                      "action": None if f.get("claimed") else "Copy link", "action_role": ["ic-copy"],
                                      "code": f["code"], "on_action": self._copy_gift} for f in d["friend_passes"]]
+
+    def _late_item(self, b):
+        kind = "Late cancel" if b["status"] == "late" else "No-show"
+        asked = b.get("kindness") or ""
+        badge, cls = {"ask": ("Asked the studio", "warn"), "kept": ("Studio kept it", ""),
+                      "forgiven": ("Forgiven", "good")}.get(asked, (kind, "warn" if b["status"] == "late" else "bad"))
+        return {"title": b["class"]["title"], "b": b,
+                "sub": "%s · %s%s" % ((b["class"].get("studio") or {}).get("name"), hb.date(b["class"]["start"]), (" · " + kind) if asked else ""),
+                "badge": badge, "badge_cls": cls, "action": "Ask to forgive" if b.get("can_ask") else None,
+                "action_role": ["ic-heart"], "on_action": self._ask}
+
+    def _ask(self, item):
+        if hb.ask_kindness(item["b"]):
+            self.load()
 
     def _draw_following(self):
         self.follow_panel.items = [{"f": f} for f in self.d["follows"]]

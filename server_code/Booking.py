@@ -4,6 +4,7 @@ Payments: Health Booker doesn't take card payments yet. A pass bought online is 
 (paid=False) and the front desk marks it paid; free offers are paid at once.
 """
 import datetime as dt
+import hashlib
 import secrets
 
 import anvil.server
@@ -127,12 +128,16 @@ def cancel_booking(booking_id):
     if C.now() <= cutoff or b["grace"]:
         Mo.refund(b["pass_used"])
         b.update(status="cancelled", updated=C.now())
-        result = "refunded"
-    else:
-        b.update(status="late", updated=C.now())
-        result = "late"
-    Mo.promote(c)
-    return C.ok(result=result)
+        Mo.promote(c)
+        return C.ok(result="refunded")
+    b.update(status="late", updated=C.now())
+    promoted = Mo.promote(c)
+    if promoted and Mo.refill_free(c["studio"]):
+        # Refilled = free: the studio lost nothing, so the late cancel costs nothing.
+        Mo.refund(b["pass_used"])
+        b.update(status="cancelled", updated=C.now())
+        return C.ok(result="refilled")
+    return C.ok(result="late")
 
 
 @anvil.server.callable(require_user=True)
@@ -212,6 +217,13 @@ def my_practice():
                             "slug": st["slug"] if st else "", "studio": st["name"] if st else ""})
     sent = [{"code": f["code"], "studio": f["studio"]["name"], "claimed": f["claimed_by"] is not None, "created": C.iso(f["created"])}
             for f in app_tables.friend_passes.search(sender=me)]
+    asked = {}
+    for r in Mo.kindness_rows(user=me):
+        if r["booking"] is not None:
+            asked[r["booking"].get_id()] = r["status"]
+    for d in late:
+        d["kindness"] = asked.get(d["id"], "")
+        d["can_ask"] = not d["kindness"] and (C.parse_iso(d["class"]["start"]) or now) >= now - dt.timedelta(days=KIND_DAYS)
     return {"upcoming": upcoming, "history": history[:200], "late": late[:20], "passes": passes, "follows": follows,
             "friend_passes": sent, "moods": {str(k): v for k, v in MOODS.items()}}  # Anvil can only send string keys
 
@@ -371,3 +383,67 @@ def friend_pass_claim(code):
     C.notify(f["sender"], s, "friend", "%s claimed your friend pass" % C.first_name(me),
              "They can come to a free class at %s. Book one together?" % s["name"], "#studio/" + s["slug"])
     return C.ok(slug=s["slug"])
+
+
+# ----------------------------------------------------------------------------------------------- ask for kindness
+
+KIND_REASONS = ["Sick", "Emergency", "Work", "Transport", "Other"]
+KIND_DAYS = 30  # how long after a class you can still ask
+
+
+@anvil.server.callable(require_user=True)
+def ask_kindness(booking_id, reason, note=""):
+    """A late cancel or no-show: ask the studio to give the credit back. One request per booking; the owner and
+    front desk answer it on their Today board and the student hears back in the inbox."""
+    me = C.require_user()
+    b = _own_booking(booking_id, me)
+    if b is None:
+        return C.fail("That booking isn't yours.")
+    if b["status"] not in ("late", "no_show"):
+        return C.fail("Only late cancels and no-shows need forgiving.")
+    k = b["klass"]
+    if k is None or C.aware(k["start"]) < C.now() - dt.timedelta(days=KIND_DAYS):
+        return C.fail("This was more than %d days ago. Please talk to the studio at the desk." % KIND_DAYS)
+    t = Mo.kindness_table()
+    if t is None:
+        return C.fail("Asking in the app opens very soon. For now, please ask at the desk.")
+    if Mo.kindness_rows(booking=b):
+        return C.fail("You already asked. The studio will answer in your inbox.")
+    if C.rate_limited("kindness", 6, 3600):
+        return C.fail("That's a lot of requests in an hour. Please try again later.")
+    reason = reason if reason in KIND_REASONS else "Other"
+    s = b["studio"]
+    t.add_row(booking=b, user=me, studio=s, reason=reason, note=C.text(note, 300, multiline=True), status="ask",
+              reply="", created=C.now(), decided=None, is_demo=False)
+    who = C.first_name(me)
+    for st in app_tables.staff.search(studio=s):
+        if st["user"] is not None and st["active"] is not False and st["role"] in ("owner", "desk") and st["user"] != me:
+            C.notify(st["user"], s, "kindness", "%s asks you to forgive a %s" % (who, "no-show" if b["status"] == "no_show" else "late cancel"),
+                     "%s: %s. Answer it on your Today board." % (k["title"], reason), "#manage/%s/today" % s["slug"])
+    return C.ok(status="ask")
+
+
+# ----------------------------------------------------------------------------------------------- practise together
+
+def invite_salt():
+    salt = C.get_setting("invite_salt")
+    if not salt:
+        salt = secrets.token_hex(16)
+        C.set_setting("invite_salt", salt)
+    return str(salt)
+
+
+def invite_code(b, salt=None):
+    """A short code for a booking's "practise together" link. Derived from the booking id and a secret salt kept in
+    app_settings, so nothing new is stored on the booking and nobody can guess another person's link."""
+    salt = salt or invite_salt()
+    return hashlib.sha256((salt + b.get_id()).encode()).hexdigest()[:10]
+
+
+@anvil.server.callable(require_user=True)
+def invite_link(booking_id):
+    me = C.require_user()
+    b = _own_booking(booking_id, me)
+    if b is None or b["status"] not in ("booked", "checked_in", "waitlist") or b["klass"] is None:
+        return C.fail("You can invite friends to classes you're booked into.")
+    return C.ok(path="#class/%s/with/%s" % (b["klass"].get_id(), invite_code(b)))
